@@ -5,35 +5,56 @@ from django.utils.safestring import mark_safe
 from django.http import HttpResponse
 from django.shortcuts import redirect
 
+
 class AmenitiesAdmin(admin.StackedInline):
     model = Amenities
     extra = 0
+
+
+class KeyPointsAdmin(admin.StackedInline):
+    model = KeyPoints
+    extra = 0
+
+
+class ReviewCardAdmin(admin.StackedInline):
+    model = ReviewCard
+    extra = 0
+
 
 class FloorPlanAdmin(admin.StackedInline):
     model = FloorPlan
     extra = 0
 
+
 class NearbyPlacesAdmin(admin.StackedInline):
     model = NearbyPlaces
     extra = 0
+
 
 class GalleryImageAdmin(admin.StackedInline):
     model = GalleryImage
     extra = 0
 
+
 class ListingAdmin(admin.ModelAdmin):
-    inlines = [AmenitiesAdmin,FloorPlanAdmin ,NearbyPlacesAdmin , GalleryImageAdmin]
+    inlines = [
+        KeyPointsAdmin,
+        AmenitiesAdmin,
+        FloorPlanAdmin,
+        NearbyPlacesAdmin,
+        GalleryImageAdmin,
+        ReviewCardAdmin,
+    ]
+
 
 # Register your models here.
-admin.site.register(Listing , ListingAdmin) 
-admin.site.register(Amenities) 
-admin.site.register(FloorPlan) 
-admin.site.register(FloorPlanType) 
-admin.site.register(NearbyPlaces) 
-admin.site.register(BaseInfo) 
-admin.site.register(GalleryImage) 
-
-
+admin.site.register(Listing, ListingAdmin)
+admin.site.register(Amenities)
+admin.site.register(FloorPlan)
+admin.site.register(FloorPlanType)
+admin.site.register(NearbyPlaces)
+admin.site.register(BaseInfo)
+admin.site.register(GalleryImage)
 
 
 # ----------------------- >>>>>>>>>>>>>>>>>>>>
@@ -44,11 +65,11 @@ class StagesAdmin(admin.StackedInline):
     model = LeadStage
     extra = 0
 
-    readonly_fields = ('date',)
+    readonly_fields = ("date",)
 
 
 class EnquiryAdmin(admin.ModelAdmin):
-    list_display = ("date", "name" , "mobile" , "message")
+    list_display = ("date", "name", "mobile", "message")
 
 
 class FileAdmin(admin.ModelAdmin):
@@ -60,10 +81,9 @@ class FileAdmin(admin.ModelAdmin):
         )
 
 
-
 class LeadAdmin(admin.ModelAdmin):
 
-    search_fields = ("name", "mobile","occupation","alternate_num")
+    search_fields = ("name", "mobile", "occupation", "alternate_num")
     list_display = (
         "name",
         "date",
@@ -75,11 +95,16 @@ class LeadAdmin(admin.ModelAdmin):
         "Whatsapp",
         "call_log",
         "LeadStage",
-
     )
     ordering = ["-date"]
     inlines = [StagesAdmin]
-    list_filter = ["priority" , "product_interested", "leadstage__stage" , "occupation_type" , "Location__location" ] 
+    list_filter = [
+        "priority",
+        "product_interested",
+        "leadstage__stage",
+        "occupation_type",
+        "Location__location",
+    ]
 
     ## Problem --> some leads not showing of locations
     # def get_queryset(self, request):
@@ -89,18 +114,17 @@ class LeadAdmin(admin.ModelAdmin):
     #     if not agent_locs:
     #         print("------- > main return")
     #         return qs
-        
+
     #     else:
     #         q_sets = [ qs.filter(Location=agent.location) for agent in agent_locs]
     #         m_ = q_sets[0]
-            
+
     #         print(" ------- > filtered return")
     #         if(len(m_)>1):
     #             for q in q_sets:
     #                 m_ = m_ | q
 
     #         return m_
-            
 
     def Call(self, obj):
         objs_ = obj.mobile
@@ -122,10 +146,11 @@ class LeadAdmin(admin.ModelAdmin):
             )
 
     def m_details(self, obj):
-        occ = " : " + obj.occupation if(obj.occupation) else ""
-        
+        occ = " : " + obj.occupation if (obj.occupation) else ""
+
         return format_html(
-            f"""<p>{obj.Source.source  if(obj.Source) else ""} {"from " + obj.Location.location if(obj.Location) else obj.location_str} {occ}"""  +"</p>"
+            f"""<p>{obj.Source.source  if(obj.Source) else ""} {"from " + obj.Location.location if(obj.Location) else obj.location_str} {occ}"""
+            + "</p>"
         )
 
     def Whatsapp(self, obj):
@@ -150,34 +175,35 @@ class LeadAdmin(admin.ModelAdmin):
             """
             )
 
-
-    def call_log(self,obj):
-        c_ =  obj.calllog_set.last()
-        if(c_):
-            return(f"{c_.date}".split(".")[0])
+    def call_log(self, obj):
+        c_ = obj.calllog_set.last()
+        if c_:
+            return f"{c_.date}".split(".")[0]
         else:
             return "-"
 
 
-
 class DownloadLeadsAdmin(admin.ModelAdmin):
-    
     def response_post_save_add(self, request, obj):
-        
+
         location_ = obj.loc.location
-        
-        #get sets
-        s_ = LeadLocation.objects.filter(location = location_)
-        filtered_leads = [l for l in Lead.objects.all() if(l.Location and l.Location.location == location_) ]
-        
-        #set first location instance to all leads
+
+        # get sets
+        s_ = LeadLocation.objects.filter(location=location_)
+        filtered_leads = [
+            l
+            for l in Lead.objects.all()
+            if (l.Location and l.Location.location == location_)
+        ]
+
+        # set first location instance to all leads
         for l in filtered_leads:
             l.Location = s_[0]
             l.save()
 
-        #delete other instances of location
-        if(len(s_)>1):
-            [s.delete() for s in s_[1:]] 
+        # delete other instances of location
+        if len(s_) > 1:
+            [s.delete() for s in s_[1:]]
 
         csv = "date,name,mobile,email,location,occupation<br/>"
         for l in filtered_leads:
@@ -188,25 +214,26 @@ class DownloadLeadsAdmin(admin.ModelAdmin):
 
 
 class CallLogAdmin(admin.ModelAdmin):
-    list_display = ("agent", "lead" , "date")
+    list_display = ("agent", "lead", "date")
 
 
 class ConstructionUpdatesAdmin(admin.ModelAdmin):
-    list_display = ("date","unit_no", "image_tag" , "text")
+    list_display = ("date", "unit_no", "image_tag", "text")
 
 
 class TravelledKmsAdmin(admin.ModelAdmin):
-    list_display = ("agent", "kms" , "date")
+    list_display = ("agent", "kms", "date")
     exclude = ["agent"]
-    
+
     def save_model(self, request, obj, form, change):
         obj.agent = request.user
         super().save_model(request, obj, form, change)
 
+
 class JCBAdmin(admin.ModelAdmin):
-    list_display = ("mode" , "date" , "agent")
+    list_display = ("mode", "date", "agent")
     exclude = ["agent"]
-    
+
     def save_model(self, request, obj, form, change):
         obj.agent = request.user
         super().save_model(request, obj, form, change)
@@ -214,73 +241,75 @@ class JCBAdmin(admin.ModelAdmin):
 
 class ElectricityReadingAdmin(admin.ModelAdmin):
     exclude = ["agent"]
+
     def save_model(self, request, obj, form, change):
         obj.agent = request.user
         super().save_model(request, obj, form, change)
 
 
 class ReimbursementAdmin(admin.ModelAdmin):
-    list_display = ("date" , "agent" , "amount" , "remarks")
+    list_display = ("date", "agent", "amount", "remarks")
+
 
 class InventoryAdmin(admin.ModelAdmin):
-    list_display = ("Item" , "qty" , "item_type" , "remarks")
+    list_display = ("Item", "qty", "item_type", "remarks")
 
-    
 
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ("booking_date" , "name" , "unit_type" ,"unit_no" ,"remarks")
+    list_display = ("booking_date", "name", "unit_type", "unit_no", "remarks")
 
 
 class LeadListAdmin(admin.ModelAdmin):
     def response_add(self, request, obj, post_url_continue=None):
-        return redirect(f'/list/{obj.id}')
+        return redirect(f"/list/{obj.id}")
 
     def response_change(self, request, obj):
-        return redirect(f'/list/{obj.id}')
+        return redirect(f"/list/{obj.id}")
 
 
 class TransactionAdmin(admin.ModelAdmin):
-    list_display = ("date" , "mode" , "amount" , "category" , "head")
-    
+    list_display = ("date", "mode", "amount", "category", "head")
+
     def save_model(self, request, obj, form, change):
         b_ = Balance.objects.first()
-        
-        if(obj.mode == "Income"):
+
+        if obj.mode == "Income":
             amt = int(obj.amount) + int(b_.cash)
             b_.cash = str(amt)
 
         else:
-            amt = int(b_.cash) - int(obj.amount) 
+            amt = int(b_.cash) - int(obj.amount)
             b_.cash = str(amt)
-        
-        #save balance
+
+        # save balance
         b_.save()
         super().save_model(request, obj, form, change)
+
 
 admin.site.register(Lead, LeadAdmin)
 admin.site.register(LeadLocation)
 admin.site.register(LeadSource)
 admin.site.register(LeadStage)
 admin.site.register(Product)
-admin.site.register(Construction_Updates , ConstructionUpdatesAdmin)
-admin.site.register(Enquiry , EnquiryAdmin) 
+admin.site.register(Construction_Updates, ConstructionUpdatesAdmin)
+admin.site.register(Enquiry, EnquiryAdmin)
 admin.site.register(NotifyEmails)
 admin.site.register(Stage)
 admin.site.register(AppLeads)
 admin.site.register(Review)
-admin.site.register(Booking , BookingAdmin)
-admin.site.register(Inventory , InventoryAdmin)
-admin.site.register(Reimbursement , ReimbursementAdmin)
-admin.site.register(JCB , JCBAdmin)
-admin.site.register(ElectricityReading , ElectricityReadingAdmin)
-admin.site.register(DownloadLeads , DownloadLeadsAdmin)
+admin.site.register(Booking, BookingAdmin)
+admin.site.register(Inventory, InventoryAdmin)
+admin.site.register(Reimbursement, ReimbursementAdmin)
+admin.site.register(JCB, JCBAdmin)
+admin.site.register(ElectricityReading, ElectricityReadingAdmin)
+admin.site.register(DownloadLeads, DownloadLeadsAdmin)
 admin.site.register(MarkLeads)
 admin.site.register(AgentAccess)
 admin.site.register(Balance)
 admin.site.register(TourPics)
-admin.site.register(LeadList , LeadListAdmin)
+admin.site.register(LeadList, LeadListAdmin)
 admin.site.register(CashCategory)
-admin.site.register(TravelledKms , TravelledKmsAdmin)
-admin.site.register(CallLog , CallLogAdmin)
+admin.site.register(TravelledKms, TravelledKmsAdmin)
+admin.site.register(CallLog, CallLogAdmin)
 admin.site.register(FileUpload, FileAdmin)
-admin.site.register(Transaction , TransactionAdmin)
+admin.site.register(Transaction, TransactionAdmin)

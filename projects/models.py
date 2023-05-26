@@ -12,78 +12,108 @@ import requests as req
 class BaseInfo(models.Model):
     mobile = models.CharField(max_length=50)
     whatsapp = models.CharField(max_length=50)
-    test_server = models.CharField(max_length=100,null=True , blank=True)
-    
+    test_server = models.CharField(max_length=100, null=True, blank=True)
+
+
 # Create your models here.
 class Listing(models.Model):
-    #top
+    # top
     name = models.CharField(max_length=200)
     address = models.CharField(max_length=200)
-    starting_price = models.CharField(max_length=200)
-    status = models.CharField(max_length=200)
-    duration = models.CharField(max_length=200 , null=True)
-    project_type = models.CharField(max_length=200)
-    alert =  models.CharField(max_length=200 , null=True , blank=True)
+    starting_price = models.CharField(max_length=200, null=True, blank=True)
+    status = models.CharField(max_length=200, null=True, blank=True)
+    duration = models.CharField(max_length=200, null=True, blank=True)
+    project_type = models.CharField(max_length=200, null=True, blank=True)
+    alert = models.CharField(max_length=200, null=True, blank=True)
 
-    tour = models.ImageField(null=True , blank=True)
-    #details
+    tour = models.ImageField(null=True, blank=True)
+    # details
     description = models.TextField(max_length=10000)
-    listing_image = CropperImageField(aspectratio=1.5,null=True)
-    total_area = models.CharField(max_length=200 , null=True)
-    unit_types = models.CharField(max_length=200, null=True)
+    listing_image = CropperImageField(aspectratio=1.5, null=True)
+    total_area = models.CharField(max_length=200, null=True, blank=True)
+    unit_types = models.CharField(max_length=200, null=True, blank=True)
     location = models.CharField(max_length=200, null=True)
-    total_units = models.CharField(max_length=200, null=True)
-    bathrooms = models.CharField(max_length=200, null=True)
-    open_area = models.CharField(max_length=200, null=True)
-    rera = models.CharField(max_length=200, null=True , blank=True)
-    
-    brochure = models.FileField(null=True , blank=True)
-   
+    total_units = models.CharField(max_length=200, null=True, blank=True)
+    bathrooms = models.CharField(max_length=200, null=True, blank=True)
+    open_area = models.CharField(max_length=200, null=True, blank=True)
+    rera = models.CharField(max_length=200, null=True, blank=True)
+
+    card_key = models.CharField(max_length=200, null=True, blank=True)
+
+    brochure = models.FileField(null=True, blank=True)
+
     def __str__(self):
         return self.name
 
 
 class GalleryImage(models.Model):
     image = CropperImageField(aspectratio=1.5, null=True)
-    project = models.ForeignKey(Listing ,null = True ,on_delete=models.CASCADE )
-    video = models.FileField(null=True , blank=True)
+    project = models.ForeignKey(Listing, null=True, on_delete=models.CASCADE)
+    video = models.FileField(null=True, blank=True)
 
 
 class Amenities(models.Model):
     amenity = models.CharField(max_length=50)
-    project = models.ForeignKey(Listing ,null = True ,on_delete=models.CASCADE )
+    project = models.ForeignKey(Listing, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.amenity
 
 
+class KeyPoints(models.Model):
+    head = models.CharField(max_length=50)
+    description = models.CharField(max_length=50)
+    project = models.ForeignKey(Listing, null=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.head
+
+
+class ReviewCard(models.Model):
+    photo = CropperImageField(aspectratio=1, null=True)
+    head = models.CharField(max_length=50)
+    description = models.CharField(max_length=500)
+    name = models.CharField(max_length=50)
+    occ = models.CharField(max_length=50)
+    remarks = models.CharField(max_length=100)
+    project = models.ForeignKey(Listing, null=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.head
+
+
 class FloorPlanType(models.Model):
     title = models.CharField(max_length=50)
-    yt_link = models.TextField(null=True , blank=True)
-    project = models.ForeignKey(Listing ,null = True ,on_delete=models.CASCADE )
-    
+    yt_link = models.TextField(null=True, blank=True)
+    project = models.ForeignKey(Listing, null=True, on_delete=models.CASCADE)
+
     def __str__(self):
         return self.title
+
 
 class FloorPlan(models.Model):
     title = models.CharField(max_length=50)
     size = models.CharField(max_length=50)
-    tp = models.ForeignKey(FloorPlanType ,null = True ,on_delete=models.CASCADE , blank = True )
-    plan = models.FileField(null=True , blank=True)
-    sold_out = models.BooleanField(null=True , default=False)
+    tp = models.ForeignKey(
+        FloorPlanType, null=True, on_delete=models.CASCADE, blank=True
+    )
+    plan = models.FileField(null=True, blank=True)
+    sold_out = models.BooleanField(null=True, default=False)
 
-    project = models.ForeignKey(Listing ,null = True ,on_delete=models.CASCADE )
+    project = models.ForeignKey(Listing, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
 
+
 class NearbyPlaces(models.Model):
     place = models.CharField(max_length=500)
     distance = models.CharField(max_length=50)
-    project = models.ForeignKey(Listing ,null = True ,on_delete=models.CASCADE )
+    project = models.ForeignKey(Listing, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.place
+
 
 class Enquiry(models.Model):
     name = models.CharField(max_length=50)
@@ -91,7 +121,7 @@ class Enquiry(models.Model):
     email = models.CharField(max_length=50)
     message = models.CharField(max_length=50)
     date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    
+
     def __str__(self):
         return self.name
 
@@ -102,6 +132,7 @@ class NotifyEmails(models.Model):
 
     def __str__(self):
         return self.name
+
 
 # ----------------------- >>>>>>>>>>>>>>>>>>>>
 # Variables
@@ -146,7 +177,7 @@ class Lead(models.Model):
 
     alternate_num = models.CharField(max_length=50, null=True, blank=True)
     wa_num = models.CharField(max_length=50, null=True, blank=True)
-    appointment_dt = models.DateTimeField(null=True , blank=True)
+    appointment_dt = models.DateTimeField(null=True, blank=True)
     adset_name = models.CharField(max_length=100, null=True, blank=True)
     campaign_name = models.CharField(max_length=100, null=True, blank=True)
     p_interest = models.CharField(max_length=100, null=True, blank=True)
@@ -193,7 +224,6 @@ class Lead(models.Model):
         super(Lead, self).save(*args, **kwargs)
 
 
-
 class Stage(models.Model):
     stage = models.CharField(max_length=50, null=True, blank=True)
 
@@ -237,6 +267,7 @@ class LeadStage(models.Model):
 
 ## SPECIAL MODELS ------------------------ >>>>
 
+
 class MarkLeads(models.Model):
     text = models.TextField(null=True)
     stage = models.ForeignKey(Stage, null=True, on_delete=models.CASCADE)
@@ -249,12 +280,12 @@ class MarkLeads(models.Model):
         nums = []
         for n in self.text.split("\n"):
             n = f"+{n}"
-            n_ =  Lead.objects.get(mobile = n.strip())
+            n_ = Lead.objects.get(mobile=n.strip())
             nums.append(n_)
 
-            print(f" ------ > {n_}")    
+            print(f" ------ > {n_}")
 
-        _ = [LeadStage(stage = self.stage , lead = n).save() for n in nums]
+        _ = [LeadStage(stage=self.stage, lead=n).save() for n in nums]
 
         super(MarkLeads, self).save(*args, **kwargs)
 
@@ -269,7 +300,7 @@ class AgentAccess(models.Model):
         on_delete=models.CASCADE,
     )
 
-    location = models.ForeignKey(LeadLocation , on_delete=models.CASCADE)
+    location = models.ForeignKey(LeadLocation, on_delete=models.CASCADE)
 
 
 class CallLog(models.Model):
@@ -278,7 +309,7 @@ class CallLog(models.Model):
         on_delete=models.CASCADE,
     )
 
-    lead = models.ForeignKey(Lead , on_delete=models.CASCADE)
+    lead = models.ForeignKey(Lead, on_delete=models.CASCADE)
 
     date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
@@ -292,7 +323,7 @@ class ElectricityReading(models.Model):
         on_delete=models.CASCADE,
     )
 
-    photo = CropperImageField(aspectratio=1.5,null=True)
+    photo = CropperImageField(aspectratio=1.5, null=True)
     date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
@@ -306,7 +337,7 @@ class TravelledKms(models.Model):
     )
 
     kms = models.CharField(max_length=50, null=True, blank=True)
-    remarks = models.TextField(null = True , blank = True)
+    remarks = models.TextField(null=True, blank=True)
 
     date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
@@ -319,15 +350,18 @@ class JCB(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
-    date = models.DateTimeField( null=True, blank=True , default = datetime.now )
+    date = models.DateTimeField(null=True, blank=True, default=datetime.now)
 
     mode = models.CharField(
-        max_length=50, choices=(("START","START") , ("STOP" , "STOP")), null=True, blank=True
+        max_length=50,
+        choices=(("START", "START"), ("STOP", "STOP")),
+        null=True,
+        blank=True,
     )
 
-    photo = CropperImageField(aspectratio=1.5,null=True,  blank = True)
-    remarks = models.TextField(null = True , blank = True)
-    
+    photo = CropperImageField(aspectratio=1.5, null=True, blank=True)
+    remarks = models.TextField(null=True, blank=True)
+
     def __str__(self):
         return f"{self.agent} : {self.mode}"
 
@@ -337,10 +371,10 @@ class Reimbursement(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
-    date = models.DateTimeField( null=True, blank=True , default = datetime.now )
+    date = models.DateTimeField(null=True, blank=True, default=datetime.now)
 
     amount = models.CharField(max_length=50, null=True, blank=True)
-    remarks = models.TextField(blank=True , null=True)
+    remarks = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.agent} : {self.amount}"
@@ -352,6 +386,7 @@ class Balance(models.Model):
     def __str__(self):
         return f"cash : {self.cash}"
 
+
 class CashCategory(models.Model):
     category = models.CharField(max_length=50, null=True, blank=True)
 
@@ -360,14 +395,17 @@ class CashCategory(models.Model):
 
 
 class Transaction(models.Model):
-    date = models.DateTimeField( null=True, blank=True , default = datetime.now )
+    date = models.DateTimeField(null=True, blank=True, default=datetime.now)
     mode = models.CharField(
-        max_length=50, choices=(("Income","Income") , ("Expense" , "Expense")), null=True, blank=True
+        max_length=50,
+        choices=(("Income", "Income"), ("Expense", "Expense")),
+        null=True,
+        blank=True,
     )
     amount = models.CharField(max_length=50, null=True, blank=True)
-    category = models.ForeignKey(CashCategory , on_delete=models.CASCADE)
-    head = models.TextField( null=True, blank=True)
-    remarks = models.TextField( blank=True , null=True )
+    category = models.ForeignKey(CashCategory, on_delete=models.CASCADE)
+    head = models.TextField(null=True, blank=True)
+    remarks = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.head
@@ -375,7 +413,7 @@ class Transaction(models.Model):
 
 class LeadList(models.Model):
     title = models.CharField(max_length=50, null=True, blank=True)
-    filter_string = models.TextField( null=True, blank=True)
+    filter_string = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -383,9 +421,11 @@ class LeadList(models.Model):
 
 class Inventory(models.Model):
     Item = models.CharField(max_length=50, null=True, blank=True)
-    item_type = models.CharField(max_length=50, null=True, blank=True , default="Discrete")
+    item_type = models.CharField(
+        max_length=50, null=True, blank=True, default="Discrete"
+    )
     qty = models.CharField(max_length=50, null=True, blank=True)
-    remarks = models.TextField( blank=True , null=True )
+    remarks = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.Item
@@ -394,10 +434,11 @@ class Inventory(models.Model):
 class Booking(models.Model):
     name = models.CharField(max_length=50, null=True, blank=True)
     booking_date = models.CharField(max_length=50, null=True, blank=True)
-    unit_no =  models.CharField(max_length=50, null=True, blank=True )
-    unit_type = models.CharField(max_length=50, null=True, blank=True , default="Discrete")
-    remarks = models.TextField( blank=True , null=True )
-
+    unit_no = models.CharField(max_length=50, null=True, blank=True)
+    unit_type = models.CharField(
+        max_length=50, null=True, blank=True, default="Discrete"
+    )
+    remarks = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.unit_no
@@ -423,8 +464,11 @@ class Construction_Updates(models.Model):
     text = models.TextField(null=True, blank=True)
 
     def image_tag(self):
-        return mark_safe('<img src="/media/%s" width="150" height="150" />' % (self.image))
-    image_tag.short_description = 'Image'
+        return mark_safe(
+            '<img src="/media/%s" width="150" height="150" />' % (self.image)
+        )
+
+    image_tag.short_description = "Image"
     image_tag.allow_tags = True
 
     def __str__(self):
@@ -437,8 +481,6 @@ class AppLeads(models.Model):
 
     def __str__(self):
         return self.title
-
-
 
 
 class TourPics(models.Model):

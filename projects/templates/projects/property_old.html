@@ -6,13 +6,16 @@
 
 <head>
 
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-WMJ69W7');</script>
-<!-- End Google Tag Manager -->
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-WMJ69W7');</script>
+    <!-- End Google Tag Manager -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,33 +42,35 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <link rel="stylesheet" href="{% static 'projects/css/style.css' %}">
 
     <style>
+        iframe {
+         border-radius : 10px;   
+        }
         .overlay {
-            opacity:    0.5; 
-            background: #000; 
-            width:      100%;
-            height:     100%; 
-            z-index:    10;
-            top:        0; 
-            left:       0; 
-            position:   fixed; 
-            }
+            opacity: 0.5;
+            background: #000;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            top: 0;
+            left: 0;
+            position: fixed;
+        }
 
-            .card {
-                box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
-                transition: 0.3s;
-                border-radius: 10px;
-                text-align: center;
-            }
-
+        .card {
+            box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+            transition: 0.3s;
+            border-radius: 10px;
+            text-align: center;
+        }
     </style>
 </head>
 
 <body>
 
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WMJ69W7"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WMJ69W7" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{% static 'projects/plugins/jquery.min.js' %}"></script>
     <script src="{% static 'projects/plugins/bootstrap4/js/bootstrap.min.js' %}"></script>
@@ -113,8 +118,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <div class="header__right">
                     <div class="header__actions">
                         <div class="header__submit-listing">
-                            <div class="form_init ps-btn ps-btn--with-opacity brochure_form">Download Brochure 
-                                <i class="lnil lnil-arrow-top-right"></i></div>
+                            <div class="form_init ps-btn ps-btn--with-opacity brochure_form">Download Brochure
+                                <i class="lnil lnil-arrow-top-right"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -127,13 +133,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         alt="" /></a>
             </div>
         </div>
-        <div class="header__right"><div class="header__actions">
-            <div class="header__submit-listing">
-                <div class="form_init ps-btn ps-btn--with-opacity brochure_form">Download Brochure 
-                    <i class="lnil lnil-arrow-top-right"></i></div>
+        <div class="header__right">
+            <div class="header__actions">
+                <div class="header__submit-listing">
+                    <div class="form_init ps-btn ps-btn--with-opacity brochure_form">Download Brochure
+                        <i class="lnil lnil-arrow-top-right"></i>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
     </header>
     <div class="ps-page--single-property">
         <div class="ps-page__header">
@@ -160,43 +168,55 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                                         {% for img in project.galleryimage_set.all %}
                                         <div class="ps-block--gallery-image">
+
+                                            {% if img.video %}
+
+                                            <video autoplay loop muted style="display: block;
+                                            width: 100%;
+                                            max-width: 100%;">
+                                                <source src="/media/{{ img.video }}" type="video/mp4" />
+                                            </video>
+
+                                            {% else %}
                                             <img src="/media/{{ img.image }}" alt="">
+                                            {% endif%}
+
                                         </div>
                                         {% endfor %}
                                     </div>
                                 </div>
                                 <div class="ps-project__header">
                                     <div class="ps-project__header-left">
-                                    {% if project.alert %}
+                                        {% if project.alert %}
                                         <p class="offer-alert"> <i class="lnil lnil-offer"></i> {{ project.alert }}</p>
-                                    {% endif %}
+                                        {% endif %}
 
                                         <h1 class="ps-project__name">{{ project.name }}</h1>
                                         <p class="ps-project__address">{{ project.address }}</p>
+                                        
                                         <p class="ps-project__price"> Starting from : <strong>
                                                 {{project.starting_price}}
                                             </strong></p>
                                     </div>
                                     <div class="ps-project__header-right" style="margin-top: 20px;">
                                         <div class="ps-project__actions">
-                                            <a class="msg_init mobile_init" href="tel:{{ Base.mobile }}" style="width: auto;padding: 10px;">
+                                            <a class="msg_init mobile_init" href="tel:{{ Base.mobile }}"
+                                                style="width: auto;padding: 10px;">
                                                 <i class="lnil lnil-phone"></i>
                                                 <p style="margin: 5px;" onMouseOver="this.style.color='#FFFFFF'"
                                                     onMouseOut="this.style.color='#000000'">
                                                     {{ Base.mobile }}</p>
                                             </a>
 
-                                            {% comment %} <a class="msg_init wa_init" href="https://wa.me/{{ Base.whatsapp }}/?text=I am Interested"><i
-                                                    class="lnil lnil-bubble"></i></a> {% endcomment %}
-
-                                            
-
-                                             <a class="msg_init mobile_init" href="/tour" style="width: auto;padding: 10px;">
-                                                <i class="lnil lnil-image"></i>
-                                                <p style="margin: 5px;white-space: nowrap;" onMouseOver="this.style.color='#FFFFFF'"
+                                            <a class="msg_init wa_init" style="width: auto;padding: 10px;"
+                                                href="https://wa.me/{{ Base.whatsapp }}/?text=Hi! , I am Interested"><i
+                                                    class="lnil lnil-bubble"></i>
+                                                <p style="margin: 5px;white-space: nowrap;"
+                                                    onMouseOver="this.style.color='#FFFFFF'"
                                                     onMouseOut="this.style.color='#000000'">
-                                                    360 Virtual Tour</p>
+                                                    Whatsapp</p>
                                             </a>
+
 
                                         </div>
                                     </div>
@@ -233,10 +253,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                                     </div>
 
-                                    
-            
 
-                                <div class="ps-project__block" style="margin-bottom: 60px;
+
+
+                                    <div class="ps-project__block" style="margin-bottom: 60px;
                                                                 background: aliceblue;
                                                         border-radius : 15px;
                                                         margin-bottom: 60px;
@@ -247,43 +267,94 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                                                 margin-left: -15px;
                                                                 margin-right: -15px;
                                                                 ">
-                                    <div class="ps-project__heading" style="padding:15px;">Floor Plan</div>
-                                    <div class="ps-block--floor-plan"  style="padding:5px;">
+                                        <div class="ps-project__heading" style="padding:15px;margin-bottom: 0px;">
+                                        
+                                        <div style="    
+                                                    padding: 10px;
+                                                    background-color: white;
+                                                    width: 200px;
+                                                    border-radius: 20px;
+                                                    text-align: center;"><h3 style="margin-bottom: 0px;"> Floor Plans </h3></div>
+                                        
+                                        </div>
+                                        <div class="ps-block--floor-plan" style="padding:5px;">
 
-                                        {% for plan in project.floorplan_set.all %}
-                                        <div class="ps-accordion ps-accordion--floor-plan" style="background:white;">
-                                            <div class="ps-accordion__header">
-                                                <div class="ps-accordion__header-wrapper">
-                                                    <p><strong>{{ plan.title }}</strong></p>
-                                                    <p class="ps-accordion__params"
-                                                        style="grid-template-columns: 1fr !important;">
-                                                        
-                                                        {% if plan.sold_out %}
-                                                        <span>
-                                                            <strong style="color:red;"> SOLD OUT </strong></span> </p>
-                                                        
+                                            {% if 'Airport' in request.path or  'test' in request.path %}
+
+                                                {% for plan_type in project.floorplantype_set.all %}
+                                                    
+                                                    <div>{{ plan_type.yt_link| safe }}</div>
+
+                                                    <div style="margin:20px;">
+                                                    <h4> {{ plan_type.title }} </h4></div>
+
+
+                                                {% for plan in plan_type.floorplan_set.all %}
+                                                    <div class="ps-accordion ps-accordion--floor-plan"
+                                                        style="background:white;">
+                                                        <div class="ps-accordion__header">
+                                                            <div class="ps-accordion__header-wrapper">
+                                                                <p><strong>{{ plan.title }}</strong></p>
+                                                                <p class="ps-accordion__params"
+                                                                    style="grid-template-columns: 1fr !important;">
+
+                                                                    {% if plan.sold_out %}
+                                                                    <span>
+                                                                        <strong style="color:red;"> SOLD OUT </strong></span>
+                                                                </p>
+
+                                                                {% else %}
+                                                                <span>
+                                                                    <strong>Size</strong>: {{ plan.size }}</span> </p>
+
+                                                                {% endif %}
+                                                            </div>
+
+
+                                                            <p class="form_init brochure_form" style="padding: 10px;">View</p>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+
+
+                                                <hr style="margin: 20px;" />
+
+
+                                                {% endfor%}
+
+                                            {% else %}
+
+                                            {% for plan in project.floorplan_set.all %}
+                                            <div class="ps-accordion ps-accordion--floor-plan"
+                                                style="background:white;">
+                                                <div class="ps-accordion__header">
+                                                    <div class="ps-accordion__header-wrapper">
+                                                        <p><strong>{{ plan.title }}</strong></p>
+                                                        <p class="ps-accordion__params"
+                                                            style="grid-template-columns: 1fr !important;">
+
+                                                            {% if plan.sold_out %}
+                                                            <span>
+                                                                <strong style="color:red;"> SOLD OUT </strong></span>
+                                                        </p>
+
                                                         {% else %}
                                                         <span>
                                                             <strong>Size</strong>: {{ plan.size }}</span> </p>
-                                                        
-                                                        {% endif %}
-                                                </div>
 
-                                            
-                                                <p class="form_init brochure_form" style="padding: 10px;">View</p>
-                                                
-                                                <!-- <div class="ps-accordion__icon"><i class="lnil lnil-chevron-down"></i>
+                                                        {% endif %}
+                                                    </div>
+
+
+                                                    <p class="form_init brochure_form" style="padding: 10px;">View</p>
                                                 </div>
-                                             -->
                                             </div>
 
-                                            <!-- <div class="ps-accordion__content"><img src="/media/{{ plan.plan }}" alt="">
-                                            </div> -->
-                                        </div>
+                                            {% endfor %}
 
-                                        {% endfor %}
+                                            {% endif %}
+                                        </div>
                                     </div>
-                                </div>
 
 
                                 </div>
@@ -296,21 +367,29 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             margin-top: -30px;">
 
                                 <div class="ps-block__middle">
-                                    <div class="ps-block--agent-review" style="border-bottom: none;grid-template-columns: 95px 1fr !important;">
-                                        <div class="ps-block__left" ><img style="border-radius: 15px;" src="/media/{{ review.cus_img }}" alt=""></div>
+                                    <div class="ps-block--agent-review"
+                                        style="border-bottom: none;grid-template-columns: 95px 1fr !important;">
+                                        <div class="ps-block__left"><img style="border-radius: 15px;"
+                                                src="/media/{{ review.cus_img }}" alt=""></div>
                                         <div class="ps-block__right">
                                             <div class="ps-block__header">
                                                 <h4>{{ review.head }}</h4>
-                                                <div class="ps-block__rating"><span class="ps-rating"><i class="lnil lnil-star-fill active"></i><i class="lnil lnil-star-fill active"></i><i class="lnil lnil-star-fill active"></i><i class="lnil lnil-star-fill active"></i><i class="lnil lnil-star-fill active"></i></span>
+                                                <div class="ps-block__rating"><span class="ps-rating"><i
+                                                            class="lnil lnil-star-fill active"></i><i
+                                                            class="lnil lnil-star-fill active"></i><i
+                                                            class="lnil lnil-star-fill active"></i><i
+                                                            class="lnil lnil-star-fill active"></i><i
+                                                            class="lnil lnil-star-fill active"></i></span>
                                                 </div>
                                             </div>
                                             <div class="ps-block__content">
                                                 <p>{{ review.body }}</p>
                                             </div>
                                             <div class="ps-block__bottom">
-                                                <p><strong> {{ review.cus_name }} </strong> 
+                                                <p><strong> {{ review.cus_name }} </strong>
                                                     <br> {{ review.cus_designation }}
-                                                    <br> Purchased {{ review.cus_prod }}</p>
+                                                    <br> Purchased {{ review.cus_prod }}
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -335,7 +414,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                                 <div class="ps-block--project-nearby">
                                                     <div class="ps-block__top">
                                                         <p class="ps-block__heading"><i
-                                                                class="lnil lnil-pin-alt"></i>The Ultimate Prime Location</p>
+                                                                class="lnil lnil-pin-alt"></i>The Ultimate Prime
+                                                            Location</p>
                                                     </div>
                                                     <div class="ps-block__bottom">
 
@@ -350,49 +430,58 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                                             </div>
                                                         </div>
                                                         {% endfor %}
-                                                        
-                                                    
+
+
                                                     </div>
                                                 </div>
                                             </div>
 
                                         </div>
 
-                                        {% if 'Airport' in request.path %} 
-                                            
-                                            <div style="display: grid;
+                                        {% if 'Airport' in request.path or  'test' in request.path %}
+
+                                        <div style="display: grid;
                                             grid-template-columns: repeat(2, 1fr);
                                             grid-template-rows: repeat(3, 1fr);
                                             grid-column-gap: 10px;">
 
-                                                    <div class="mapouter" style="  grid-area: 1 / 1 / 3 / 3; ">
-                                                        <div class="gmap_canvas">
-                                                            <iframe width="100%" height="300" id="gmap_canvas" src="https://maps.google.com/maps?q=airport%20enclave%20jharsuguda&t=&z=15&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
-                                                            </iframe>
-                                                            <style>.gmap_canvas {overflow:hidden;background:none!important;}</style>
-                                                        </div>
-                                                    </div>
-
-                                
-                                                    <div style="grid-area: 3 / 1 / 4 / 2;" ><iframe src="https://www.youtube.com/embed/tLiKThJH53s"
-                                                        title="Airport Enclave , Jharsuguda | Location | Ascent Buildhome Developers Ltd"
-                                                        frameborder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                        allowfullscreen></iframe>
-
-                                                    </div>
-
-
-                                                    <div style="grid-area: 3 / 2 / 4 / 3;"><iframe src="https://www.youtube.com/embed/RFA2IajiMKg"
-                                                        title="Airport Enclave , Jharsuguda | Location | Ascent Buildhome Developers Ltd"
-                                                        frameborder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                        allowfullscreen></iframe>
-                                                    
-            
-                                                    </div>
-                                                            
+                                            <div class="mapouter" style="  grid-area: 1 / 1 / 3 / 3; ">
+                                                <div class="gmap_canvas">
+                                                    <iframe width="100%" height="300" id="gmap_canvas"
+                                                        src="https://maps.google.com/maps?q=airport%20enclave%20jharsuguda&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                                                        frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+                                                    </iframe>
+                                                    <style>
+                                                        .gmap_canvas {
+                                                            overflow: hidden;
+                                                            background: none !important;
+                                                        }
+                                                    </style>
+                                                </div>
                                             </div>
+
+
+                                            <div style="grid-area: 3 / 1 / 4 / 2;"><iframe
+                                                    src="https://www.youtube.com/embed/tLiKThJH53s"
+                                                    title="Airport Enclave , Jharsuguda | Location | Ascent Buildhome Developers Ltd"
+                                                    frameborder="0"
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                    allowfullscreen></iframe>
+
+                                            </div>
+
+
+                                            <div style="grid-area: 3 / 2 / 4 / 3;"><iframe
+                                                    src="https://www.youtube.com/embed/JoXIpCiv98U"
+                                                    title="Airport Enclave , Jharsuguda | Location | Ascent Buildhome Developers Ltd"
+                                                    frameborder="0"
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                    allowfullscreen></iframe>
+
+
+                                            </div>
+
+                                        </div>
 
                                         {% endif %}
 
@@ -516,30 +605,53 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <div class="ps-site-overlay"></div>
 
+    {% if project.tour %}
+    <a target="_blank" href="/tour" style="position: fixed; bottom: 20px; right: 20px; z-index:100;">
+        <img src="/media/{{ project.tour }}" style="width: 200px;" />
+    </a>
+
+    {% else %}
+
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/62d257317b967b117999ca92/1g82q97dm';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
+
+    {% endif %}
+
 
 
     <script>
 
-    function form_init(){
+        function form_init() {
             Swal.fire({
-            title: 'Let\'s Connect',
-            html: `<form id="b_form" method="post"> {% csrf_token %} <label for="id_name">Name:</label> {{ b_form.name }} <br> <label for="id_phone">Phone:</label> {{ b_form.phone }} <br> <label for="id_email">Email:</label> {{ b_form.email }} <br> <label for="id_interested_in">Interested In:</label> {{ b_form.interested_in}} </form>`,
-            confirmButtonText: 'Download Brochure',
-            focusConfirm: false,
-            allowOutsideClick: false,
-            showCloseButton: true,
-            preConfirm: () => {
-                $(".swal2-input").slice(0,-1).each(function(idx, el) {     
-                    if ( ! el.value){
-                        Swal.showValidationMessage(
-                        `Please fill details`
-                        )
-                    }
-                })
+                title: 'Let\'s Connect',
+                html: `<form id="b_form" method="post"> {% csrf_token %} <label for="id_name">Name:</label> {{ b_form.name }} <br> <label for="id_phone">Phone:</label> {{ b_form.phone }} <br> <label for="id_email">Email:</label> {{ b_form.email }} <br> <label for="id_interested_in">Interested In:</label> {{ b_form.interested_in}} </form>`,
+                confirmButtonText: 'Download Brochure',
+                focusConfirm: false,
+                allowOutsideClick: false,
+                showCloseButton: true,
+                preConfirm: () => {
+                    $(".swal2-input").slice(0, -1).each(function (idx, el) {
+                        if (!el.value) {
+                            Swal.showValidationMessage(
+                                `Please fill details`
+                            )
+                        }
+                    })
 
-                return 1
+                    return 1
 
-            }
+                }
             }).then((result) => {
                 if (result.isConfirmed) {
                     var win = window.open('/media/{{ project.brochure }}', '_blank');
@@ -552,65 +664,51 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     }
 
                     $("#b_form").submit();
-                
+
                 }
-                
+
             });
 
         };
 
-    {% if request.session.submitted_form %}
+        {% if request.session.submitted_form %}
 
-            $(".brochure_form").click(function(){
+        $(".brochure_form").click(function () {
 
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Submitted',
-                    text: 'Our team will contact you soon !',
-                    confirmButtonText: 'Download Brochure',
-                }).then((result) => {
+            Swal.fire({
+                icon: 'success',
+                title: 'Submitted',
+                text: 'Our team will contact you soon !',
+                confirmButtonText: 'Download Brochure',
+            }).then((result) => {
 
-                    if (result.isConfirmed) {
-                            var win = window.open('/media/{{ project.brochure }}', '_blank');
-                            if (win) {
-                                //Browser has allowed it to be opened
-                                win.focus();
-                            } else {
-                                //Browser has blocked it
-                                alert('Please allow popups for this website');
-                            }
-                        }
-
-                    });
-
+                if (result.isConfirmed) {
+                    var win = window.open('/media/{{ project.brochure }}', '_blank');
+                    if (win) {
+                        //Browser has allowed it to be opened
+                        win.focus();
+                    } else {
+                        //Browser has blocked it
+                        alert('Please allow popups for this website');
+                    }
+                }
 
             });
-                
-    {% else %}
 
-      //  window.onload = form_init;
+
+        });
+
+        {% else %}
+
+        //  window.onload = form_init;
 
         $(".brochure_form").click(form_init);
 
-    {% endif %}
+        {% endif %}
 
     </script>
 
-    <!--Start of Tawk.to Script-->
-    <script type="text/javascript">
-        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-        (function(){
-        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-        s1.async=true;
-        s1.src='https://embed.tawk.to/62d257317b967b117999ca92/1g82q97dm';
-        s1.charset='UTF-8';
-        s1.setAttribute('crossorigin','*');
-        s0.parentNode.insertBefore(s1,s0);
-        })();
-        </script>
-        <!--End of Tawk.to Script-->
 
-        
 
 </body>
 

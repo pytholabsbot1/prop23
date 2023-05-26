@@ -193,9 +193,11 @@
 
                                         <h1 class="ps-project__name">{{ project.name }}</h1>
                                         <p class="ps-project__address">{{ project.address }}</p>
+                                        {% if not key_points %}
                                         <p class="ps-project__price"> Starting from : <strong>
                                                 {{project.starting_price}}
                                             </strong></p>
+                                        {% endif %}
                                     </div>
                                     <div class="ps-project__header-right" style="margin-top: 20px;">
                                         <div class="ps-project__actions">
@@ -222,6 +224,7 @@
                                 </div>
                                 <div class="ps-project__information">
                                     <div class="ps-project__meta">
+                                        {% if not key_points %}
                                         <figure>
                                             <figcaption>Status</figcaption>
                                             <p>{{ project.status }}</p>
@@ -250,10 +253,21 @@
                                         </figure>
                                         {% endif %}
 
+                                        {% else %}
+                                            {% for k in key_points %}
+                                            <figure>
+                                                <figcaption>{{k.head}}</figcaption>
+                                                <p>{{ k.description }}</p>
+                                            </figure>
+
+                                            {% endfor %}
+                                        {% endif %}
+
                                     </div>
 
 
 
+                                    {% if not key_points %}
 
                                     <div class="ps-project__block" style="margin-bottom: 60px;
                                                                 background: aliceblue;
@@ -316,7 +330,7 @@
                                                 {% endfor %}
 
 
-                                                <hr style="margin: 20px;" />
+                                                
 
 
                                                 {% endfor%}
@@ -355,10 +369,16 @@
                                         </div>
                                     </div>
 
+                                    {% endif %}
+
+                                    <hr style="margin: 20px;" />
+
 
                                 </div>
                             </div>
 
+                            
+                            {% if review %}
 
                             <div class="ps-block--project-reviews card" style="    margin-bottom: 30px;
                             text-align: left;
@@ -369,7 +389,7 @@
                                     <div class="ps-block--agent-review"
                                         style="border-bottom: none;grid-template-columns: 95px 1fr !important;">
                                         <div class="ps-block__left"><img style="border-radius: 15px;"
-                                                src="/media/{{ review.cus_img }}" alt=""></div>
+                                                src="/media/{{ review.photo }}" alt=""></div>
                                         <div class="ps-block__right">
                                             <div class="ps-block__header">
                                                 <h4>{{ review.head }}</h4>
@@ -382,12 +402,12 @@
                                                 </div>
                                             </div>
                                             <div class="ps-block__content">
-                                                <p>{{ review.body }}</p>
+                                                <p>{{ review.description }}</p>
                                             </div>
                                             <div class="ps-block__bottom">
-                                                <p><strong> {{ review.cus_name }} </strong>
-                                                    <br> {{ review.cus_designation }}
-                                                    <br> Purchased {{ review.cus_prod }}
+                                                <p><strong> {{ review.name }} </strong>
+                                                    <br> {{ review.occ }}
+                                                    <br> {{ review.remarks }}
                                                 </p>
                                             </div>
                                         </div>
@@ -396,6 +416,8 @@
                                 </div>
 
                             </div>
+
+                            {% endif %}
 
 
 
@@ -437,7 +459,7 @@
 
                                         </div>
 
-                                        {% if 'Airport' in request.path or  'test' in request.path %}
+                                        
 
                                         <div style="display: grid;
                                             grid-template-columns: repeat(2, 1fr);
@@ -447,7 +469,7 @@
                                             <div class="mapouter" style="  grid-area: 1 / 1 / 3 / 3; ">
                                                 <div class="gmap_canvas">
                                                     <iframe width="100%" height="300" id="gmap_canvas"
-                                                        src="https://maps.google.com/maps?q=airport%20enclave%20jharsuguda&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                                                        src="{{ project.location }}"
                                                         frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
                                                     </iframe>
                                                     <style>
@@ -482,12 +504,13 @@
 
                                         </div>
 
-                                        {% endif %}
+                                        
 
                                     </div>
                                 </div>
 
-
+                                
+                                {% if not key_points %}
                                 <div class="ps-project__block">
                                     <div class="ps-project__heading">Amenities</div>
                                     <div class="ps-project__amenities">
@@ -496,6 +519,7 @@
                                         {% endfor %}
                                     </div>
                                 </div>
+                                {% endif %}
 
 
 
@@ -505,7 +529,7 @@
                     </div>
                     <div class="ps-section__right">
                         <aside class="ps-widget ps-widget--project">
-                            <h4 class="ps-widget__heading">Book Site Visit</h4>
+                            <h4 class="ps-widget__heading">Enquire Now</h4>
                             <div class="ps-widget__content">
                                 <form class="ps-form--agent-contact" method="post">
                                     {% csrf_token %}

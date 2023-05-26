@@ -8,8 +8,8 @@ from .models import *
 from .forms import BrochureForm, EnquiryForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
-import pandas, re , json , requests as req
-from datetime import date, timedelta , datetime
+import pandas, re, json, requests as req
+from datetime import date, timedelta, datetime
 from django.db.models import Count
 import sib_api_v3_sdk
 from sib_api_v3_sdk.rest import ApiException
@@ -58,12 +58,12 @@ def sendwa(request, index):
 
     lead = Lead.objects.get(id=index)
 
-    server =  BaseInfo.objects.first().test_server
+    server = BaseInfo.objects.first().test_server
 
-    url = f'http://{server}/send_msg'
-    myobj = {'mobile': lead.mobile}
+    url = f"http://{server}/send_msg"
+    myobj = {"mobile": lead.mobile}
 
-    x = req.post(url, json = myobj)
+    x = req.post(url, json=myobj)
 
     return HttpResponse(x.text)
 
@@ -154,10 +154,10 @@ def index(request):
         post = request.POST
 
         m_ = post.get("phone")
-        m = m_.replace(" ","")
-        m = m[1:] if(m[0] == "0") else m
-        m = f"+91{m}" if("+" not in m) else m
-        m = m.replace("+910" , "+91")
+        m = m_.replace(" ", "")
+        m = m[1:] if (m[0] == "0") else m
+        m = f"+91{m}" if ("+" not in m) else m
+        m = m.replace("+910", "+91")
 
         msg_ = (
             f'Interested in { post.get("interested_in")}'
@@ -173,32 +173,30 @@ def index(request):
         )
         a_.save()
 
-       
-        
         lead_exist = Lead.objects.filter(mobile=m)
 
-        if(not lead_exist):
+        if not lead_exist:
             try:
-                s_ = LeadSource.objects.get(source = "Website")
+                s_ = LeadSource.objects.get(source="Website")
                 b_ = Lead(
-                name=post.get("name"),
-                mobile=m,
-                email=post.get("email"),
-                date= datetime.now(),
-                p_interest=msg_,
-                Source=s_
+                    name=post.get("name"),
+                    mobile=m,
+                    email=post.get("email"),
+                    date=datetime.now(),
+                    p_interest=msg_,
+                    Source=s_,
                 )
                 b_.save()
 
             except Exception as e:
-                open('/home/ubuntu/ascent/e.txt','w').write(str(e))
-        
+                open("/home/ubuntu/ascent/e.txt", "w").write(str(e))
+
         else:
             l_ = lead_exist[0]
             s = Stage.objects.get(stage="Submitted Again")
             r_ = "From Enquiry"
-            
-            LeadStage(stage = s , lead = lead_exist[0] , remarks=r_).save()
+
+            LeadStage(stage=s, lead=lead_exist[0], remarks=r_).save()
 
         request.session["submitted_form"] = True
 
@@ -225,10 +223,10 @@ def property(request, project):
     if request.method == "POST":
         post = request.POST
         m_ = post.get("phone")
-        m = m_.replace(" ","")
-        m = m[1:] if(m[0] == "0") else m
-        m = f"+91{m}" if("+" not in m) else m
-        m = m.replace("+910" , "+91")
+        m = m_.replace(" ", "")
+        m = m[1:] if (m[0] == "0") else m
+        m = f"+91{m}" if ("+" not in m) else m
+        m = m.replace("+910", "+91")
 
         msg_ = (
             f'Interested in { post.get("interested_in")}'
@@ -246,29 +244,28 @@ def property(request, project):
 
         lead_exist = Lead.objects.filter(mobile=m)
 
-        if(not lead_exist):        
+        if not lead_exist:
             try:
-                s_ = LeadSource.objects.get(source = "Website")
+                s_ = LeadSource.objects.get(source="Website")
                 b_ = Lead(
-                name=post.get("name"),
-                mobile=m,
-                email=post.get("email"),
-                date= datetime.now(),
-                p_interest=msg_,
-                Source=s_
+                    name=post.get("name"),
+                    mobile=m,
+                    email=post.get("email"),
+                    date=datetime.now(),
+                    p_interest=msg_,
+                    Source=s_,
                 )
                 b_.save()
 
             except Exception as e:
-                open('/home/ubuntu/ascent/e.txt','w').write(str(e))
-
+                open("/home/ubuntu/ascent/e.txt", "w").write(str(e))
 
         else:
             l_ = lead_exist[0]
             s = Stage.objects.get(stage="Submitted Again")
             r_ = "From Enquiry"
-            
-            LeadStage(stage = s , lead = lead_exist[0] , remarks=r_).save()
+
+            LeadStage(stage=s, lead=lead_exist[0], remarks=r_).save()
 
         request.session["submitted_form"] = True
 
@@ -280,23 +277,23 @@ def property(request, project):
             msg_=msg_,
         )
 
+    p_ = Listing.objects.filter(name=project)[0]
     context = {
-        "project": Listing.objects.filter(name=project)[0],
+        "project": p_,
         "amenities": Amenities.objects.all(),
         "form": form,
         "b_form": b_form,
-        "review": Review.objects.first(),
+        "key_points": p_.keypoints_set.all(),
+        "review": p_.reviewcard_set.first(),
         "projects": Listing.objects.all()[::-1],
         "Base": BaseInfo.objects.first(),
     }
     return render(request, "projects/property.html", context=context)
 
 
-
 def PropTest(request):
     form = EnquiryForm()
     b_form = BrochureForm()
-
 
     context = {
         "project": Listing.objects.filter(name="Airport Enclave")[0],
@@ -310,8 +307,6 @@ def PropTest(request):
     return render(request, "projects/property1.html", context=context)
 
 
-
-
 @csrf_exempt
 # post leads with zapier
 def lepost(request):
@@ -320,25 +315,26 @@ def lepost(request):
 
         # if password is correct
         if request.POST["pass"] == pss:
-            feilds = ["name", 
-            "mobile", 
-            "email", 
-            "occupation", 
-            "location_str" , 
-            "p_interest",
-            "wa_num",
-            "adset_name",
-            "campaign_name"
+            feilds = [
+                "name",
+                "mobile",
+                "email",
+                "occupation",
+                "location_str",
+                "p_interest",
+                "wa_num",
+                "adset_name",
+                "campaign_name",
             ]
             m_ = request.POST["mobile"]
-            m = m_.replace(" ","")
-            m = m[1:] if(m[0] == "0") else m
-            m = f"+91{m}" if("+" not in m) else m
-            m = m.replace("+910" , "+91")
-            
+            m = m_.replace(" ", "")
+            m = m[1:] if (m[0] == "0") else m
+            m = f"+91{m}" if ("+" not in m) else m
+            m = m.replace("+910", "+91")
+
             lead_exist = Lead.objects.filter(mobile=m)
 
-            if(not lead_exist):
+            if not lead_exist:
 
                 l_ = Lead()
 
@@ -349,26 +345,24 @@ def lepost(request):
                 l_.Source = LeadSource.objects.get(source="FB")
                 l_.lead_type = "PAID"
 
-                #set appointment
+                # set appointment
                 # t_ = request.POST["appointment_dt"].split(":")
                 # t_ = ":".join(t_[:2])
 
                 # l_.appointment_dt =  datetime.strptime(t_ , "%Y-%m-%dT%H:%M")
 
-                
                 # save lead
 
                 l_.save()
 
                 print(" ---------- >> ")
-            
+
             else:
                 l_ = lead_exist[0]
                 s = Stage.objects.get(stage="Submitted Again")
-                r_ = "\n".join([request.POST[f]  for f in feilds])
-                
-                LeadStage(stage = s , lead = lead_exist[0] , remarks=r_).save()
+                r_ = "\n".join([request.POST[f] for f in feilds])
 
+                LeadStage(stage=s, lead=lead_exist[0], remarks=r_).save()
 
             notify(
                 n_=request.POST.get("name"),
@@ -377,7 +371,7 @@ def lepost(request):
                 msg_="New Lead from FB",
             )
 
-            return HttpResponse(l_.name , "setted")
+            return HttpResponse(l_.name, "setted")
 
         else:
             return HttpResponse("Password Incorrect motha fucka")
@@ -413,17 +407,16 @@ def LeadListView(request, mod_id):
     # return HttpResponse("hi")
 
 
-
 def tour(request):
 
     b_form = BrochureForm()
     if request.method == "POST" and "submitted_form" not in request.session:
         post = request.POST
         m_ = post.get("phone")
-        m = m_.replace(" ","")
-        m = m[1:] if(m[0] == "0") else m
-        m = f"+91{m}" if("+" not in m) else m
-        m = m.replace("+910" , "+91")
+        m = m_.replace(" ", "")
+        m = m[1:] if (m[0] == "0") else m
+        m = f"+91{m}" if ("+" not in m) else m
+        m = m.replace("+910", "+91")
 
         msg_ = (
             f'Interested in { post.get("interested_in")}'
@@ -441,29 +434,28 @@ def tour(request):
 
         lead_exist = Lead.objects.filter(mobile=m)
 
-        if(not lead_exist):        
+        if not lead_exist:
             try:
-                s_ = LeadSource.objects.get(source = "Website")
+                s_ = LeadSource.objects.get(source="Website")
                 b_ = Lead(
-                name=post.get("name"),
-                mobile=m,
-                email=post.get("email"),
-                date= datetime.now(),
-                p_interest=msg_,
-                Source=s_
+                    name=post.get("name"),
+                    mobile=m,
+                    email=post.get("email"),
+                    date=datetime.now(),
+                    p_interest=msg_,
+                    Source=s_,
                 )
                 b_.save()
 
             except Exception as e:
-                open('/home/ubuntu/ascent/e.txt','w').write(str(e))
-
+                open("/home/ubuntu/ascent/e.txt", "w").write(str(e))
 
         else:
             l_ = lead_exist[0]
             s = Stage.objects.get(stage="Submitted Again")
             r_ = "From Enquiry"
-            
-            LeadStage(stage = s , lead = lead_exist[0] , remarks=r_).save()
+
+            LeadStage(stage=s, lead=lead_exist[0], remarks=r_).save()
 
         request.session["submitted_form"] = True
 
@@ -475,7 +467,6 @@ def tour(request):
             msg_=msg_,
         )
 
-
     context = {
         "main_gate": TourPics.objects.get(scene_text="Main Gate"),
         "entrance": TourPics.objects.get(scene_text="Entrance"),
@@ -486,7 +477,6 @@ def tour(request):
         "b_form": b_form,
     }
     return render(request, "projects/comp/tour1.html", context=context)
-
 
 
 # -------------------------------------------------------------------- Analysis Shit
@@ -549,7 +539,6 @@ def dash(request):
     return render(request, "projects/analysis/dash.html", context=context)
 
 
-
 def json_api(request, query):
 
     if request.method == "GET" and query == "alkdjlLKJLKHKJGJHMNBJHF345234LIPOO":
@@ -570,9 +559,7 @@ def json_api(request, query):
             s = lead.leadstage_set.last()
             loc = lead.Location.location if (lead.Location) else lead.location_str
             s_ = lead.Source.source if (lead.Source) else "-"
-            i_ = (
-                lead.product_interested.product if (lead.product_interested) else ""
-            )
+            i_ = lead.product_interested.product if (lead.product_interested) else ""
             p_ = lead.purpose
 
             response_data["dates"].append(str(lead.date))
@@ -582,9 +569,7 @@ def json_api(request, query):
             response_data["occ"].append(lead.occupation)
             response_data["details"].append(f"{s_} : {p_} {i_}")
 
-        return HttpResponse(
-            json.dumps(response_data), content_type="application/json"
-        )    
-            
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
+
     else:
         return HttpResponse("Baap se panga mat lo Bete")
