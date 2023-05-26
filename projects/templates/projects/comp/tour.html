@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tour</title>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WMJ69W7');</script>
+<!-- End Google Tag Manager -->
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"
+    />
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"
+    ></script>
+    <style>
+      html {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        position: fixed;
+        cursor: default;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+  <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WMJ69W7"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+    <div id="panorama"></div>
+    <script>
+      pannellum.viewer("panorama", {
+        hotSpotDebug: true,
+        default: {
+          firstScene: "gate",
+          author: "Airport Enclave , Jharsuguda",
+          sceneFadeDuration: 1000,
+        },
+
+        scenes: {
+          gate: {
+            title: "Main Gate",
+            hfov: 110,
+            pitch: 11.505,
+            yaw: -0.6425,
+            type: "equirectangular",
+            panorama: "/media/{{main_gate.scene_img}}",
+            hotSpots: [
+              {
+                pitch: 5.166,
+                yaw: -36.54,
+                type: "scene",
+                text: "Entrance Gate",
+                sceneId: "entrance",
+              },
+            ],
+          },
+
+          entrance: {
+            title: "Entrance",
+            hfov: 110,
+            yaw: 5,
+            type: "equirectangular",
+            panorama: "/media/{{ entrance.scene_img }}",
+            hotSpots: [
+              {
+                pitch: 10.0581,
+                yaw: -135.34,
+                type: "scene",
+                text: "Front : 4BHK Duplex (Unit A3)",
+                sceneId: "a3_front",
+              },
+
+              {
+                pitch: 11.094,
+                yaw: 142.296,
+                type: "scene",
+                text: "Terrace : 4BHK Duplex (Unit B3)",
+                sceneId: "b3_terrace",
+              },
+            ],
+          },
+
+          a3_front: {
+            title: "Front : 4BHK Duplex (Unit A3)",
+            hfov: 110,
+            yaw: 5,
+            type: "equirectangular",
+            panorama: "/media/{{a3_front.scene_img}}",
+            hotSpots: [
+              {
+                pitch: 32.5155,
+                yaw: 8.85483,
+                type: "scene",
+                text: "1st Floor : 4BHK Duplex (Unit A3)",
+                sceneId: "a3_first_floor",
+              },
+            ],
+          },
+
+          a3_first_floor: {
+            title: "1st Floor : 4BHK Duplex (Unit A3)",
+            hfov: 110,
+            yaw: 5,
+            type: "equirectangular",
+            panorama: "/media/{{a3_first_floor.scene_img}}",
+            hotSpots: [
+              {
+                pitch: 8.9745,
+                yaw: -81.7154,
+                type: "scene",
+                text: "Terrace : 4BHK Duplex (Unit A3)",
+                sceneId: "a3_terrace",
+              },
+            ],
+          },
+
+          a3_terrace: {
+            title: "Terrace : 4BHK Duplex (Unit A3)",
+            hfov: 110,
+            yaw: 5,
+            type: "equirectangular",
+            panorama: "/media/{{a3_terrace.scene_img}}",
+            hotSpots: [
+              {
+                pitch: -6.793,
+                yaw: 40.7099,
+                type: "scene",
+                text: "Entrance",
+                sceneId: "entrance",
+              },
+            ],
+          },
+
+          b3_terrace: {
+            title: "Terrace : 4BHK Duplex (Unit B3)",
+            hfov: 110,
+            yaw: 5,
+            type: "equirectangular",
+            panorama: "/media/{{b3_terrace.scene_img}}",
+            hotSpots: [
+              {
+                pitch: -6.793,
+                yaw: 40.7099,
+                type: "scene",
+                text: "Entrance",
+                sceneId: "entrance",
+              },
+            ],
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+ {% load static%}
+
+ 
+<div class="ps-section ps-project-listing with-carousel">
+    <div class="container">
+        <div class="ps-section__header">
+            <h3 class="ps-section__heading">Featured Projects</h3>
+            <div class="ps-section__carousel-navigation"><a class="ps-btn--carouse-arrow prev" href="#carousel-featured-properties"><i class="lnil lnil-chevron-left"></i></a><a class="ps-btn--carouse-arrow next" href="#carousel-featured-properties"><i class="lnil lnil-chevron-right"></i></a></div>
+        </div>
+        <div class="ps-section__content">
+            <div class="owl-slider ps-carousel" data-owl-auto="true" data-owl-loop="true" data-owl-speed="7500" data-owl-gap="30" data-owl-nav="true" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="2" data-owl-item-lg="3" data-owl-duration="1000" data-owl-mousedrag="false" id="carousel-featured-properties">
+                
+                {% for project in projects %}
+                <div class="ps-project ps-project--grid">
+                    <div class="ps-project__thumbnail">
+                        <div class="ps-project__image"><img src="/media/{{ project.listing_image }}" alt="" /></div><a class="ps-project__overlay" href="/project/{{ project.name }}"></a>
+                        <div class="ps-project__badges"><a class="ps-project__badge featured" href="javascript:void(0)">HOT</a></div>
+                    </div>
+                    <div class="ps-project__content">
+                        <h4 class="ps-project__name"><a href="/project/{{ project.name }}">  {{ project.name }} </a></h4>
+                        <p class="ps-project__address">{{ project.address }}</p>
+                        <p class="ps-project__price"><strong>{{ project.starting_price }}</strong> <span></span>
+                        </p>
+                        <div class="ps-project__meta">
+                            <figure>
+                                <figcaption>Unit Type</figcaption>
+                                <p>{{ project.project_type }}</p>
+                            </figure>
+                            <figure>
+                                <figcaption>Status</figcaption>
+                                <p>{{ project.status }}</p>
+                            </figure>
+                            <figure>
+                                <figcaption>Handover In</figcaption>
+                                <p>{{ project.duration }}</p>
+                            </figure>
+                        </div>
+                        <div class="ps-project__services">
+                            <p><span><i class="lnil lnil-size"></i>{{ project.total_area }}</span></p>
+                            <p><span><i class="lnil lnil-hospital-bed"></i>{{ project.unit_types }}</span></p>
+                            <p><span><i class="lnil lnil-home"></i>{{ project.total_units }} Units</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</div>

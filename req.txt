@@ -1,0 +1,23 @@
+django
+django-cropperjs
+flask
+pillow
+gunicorn
+
+
+apt-get update
+sudo apt-get install certbot
+sudo apt-get install python3-certbot-nginx
+
+nginx -t && nginx -s reload
+sudo certbot --nginx -d ascentbuildhome.com -d www.ascentbuildhome.com
+
+sudo systemctl daemon-reload
+sudo systemctl restart gunicorn
+
+
+WorkFLow :
+
+- uncomment newleads in urls
+- get the csv data to Whatsapp_automate
+- Mark the status of sent & error leads with MarkLeads Model

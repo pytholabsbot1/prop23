@@ -1,0 +1,121 @@
+   {% extends 'projects/index.html' %}
+   {% block content %}
+{% load static%}
+   
+    <div id="homepage-one">
+        <div class="ps-home-search bg--cover" data-background="{% static 'projects/img/bg/home-bg.jpg' %} ">
+            <div class="container ps-section__wrapper">
+                <div class="ps-section__content">
+                    <div class="ps-section__top">
+                        <h3>Discover Your Dream Home</h3>
+                        <p>Presenting a Luxurious and Premium Lifestyle.</p>
+                    </div>
+                    <p class="ps-section__stats">     
+                        <span><i class="lnil lnil-apartment"></i>Legacy of over 2 Decades</span> 
+                        <a href="tel:{{ Base.mobile }}"><i class="lnil lnil-phone-caling"></i>{{ Base.mobile }}</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="ps-site-stats">
+            <div id="about" class="container">
+                <div class="ps-section__intro" style="grid-template-columns: 1fr">
+                    <div class="ps-section__content" >
+                        <div class="ps-section__mission">
+
+                            <div>    
+                                <img style="margin-bottom: 15px;margin-left: 15px;max-width: 150px;border-radius: 10px;" src="{% static 'projects/img/founder.png' %}" alt="" srcset="">
+                            </div>
+
+                            <h3> Founder's <br> Desk</h3>
+                        </div>
+
+                        <div class="ps-section__desc">
+                            <p class="p_">Welcome to Ascent Build Home Developers LTD (ABL), a Real Estate Company offering ‘Dream Home’ with blend of luxury, incomparable designing and picturesque surroundings. As the value of nature and pristine environment couldn’t be compromised for a modern lifestyle so we have always preferred our sites amidst beautiful and lush green views to provide a sense of calmness. Means, a perfect luxurious home for you, away from the regular stress of crowded places which helps to rejuvenate physical and inner being simultaneously. As our world class designed residence solutions are backed with innovation and technology, where luxury and reliability transforming the life style of our customers in the arms of nature. </p>
+                            <br>
+                            <p class="p_">Here, a big share of our happiness comes through the positive change we have brought in the society by creating employment for the local residents, and making efforts to improve their daily life through regular donations to provide medical facilities to their families and educational benefits for children.</p>
+
+                        </div>
+                    </div>
+    
+                </div>
+
+
+                <div class="ps-section__wrapper">
+                    <div class="ps-block--stat">
+                        <div class="ps-block__left">
+                            <h3>600+</h3>
+                        </div>
+                        <div class="ps-block__right">
+                            <p>Happy Families</p>
+                        </div>
+                    </div>
+                    <div class="ps-block--stat">
+                        <div class="ps-block__left">
+                            <h3>10,000+</h3>
+                        </div>
+                        <div class="ps-block__right">
+                            <p>Trees Planted<br/> near projects</p>
+                        </div>
+                    </div>
+                    <div class="ps-block--stat">
+                        <div class="ps-block__left">
+                            <h3>40Lac+</h3>
+                        </div>
+                        <div class="ps-block__right">
+                            <p>Sqft Area <br>Under Development</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        {% include 'projects/comp/listings.html' %}
+
+        <div id="locations" class="ps-section ps-top-destinations with-bg bg--cover" data-background="{% static 'projects/img/bg/destination-bg.jpg' %} ">
+            <div class="container">
+                <div class="ps-section__header">
+                    <h3 class="ps-section__heading">Discover Our Sites</h3>
+                </div>
+                <div class="ps-section__content">
+                    <div class="ps-section__columns">
+                        <div class="ps-section__column">
+                            <div class="ps-block--destination">
+                                <div class="ps-block__image"><img style="border-radius: 10px;" src="{% static 'projects/img/hillcourt.png' %} " alt="" /><a class="ps-block__overlay" href="#"></a></div>
+                                <div class="ps-block__content">
+                                    <h4><a target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/place/28%C2%B007'01.7%22N+76%C2%B051'34.5%22E/@28.116367,76.8581205,408m/data=!3m1!1e3!4m9!1m2!10m1!1e2!3m5!1s0x390d35c5438b1515:0x0!7e2!8m2!3d28.117144!4d76.85958">Hillcourt ,  Bhiwadi</a></h4>
+                                    <p>view location</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ps-section__column">
+                            <div class="ps-block--destination">
+                                <div class="ps-block__image"><img style="border-radius: 10px;" src="{% static 'projects/img/airport_enclave_map.png' %} " alt="" /><a class="ps-block__overlay" href="#"></a></div>
+                                <div class="ps-block__content">
+                                    <h4><a target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/place/Airport+Enclave/@21.9050008,84.042591,17z/data=!4m5!3m4!1s0x3a20e594993a3d2d:0xb952cae897fad550!8m2!3d21.9059237!4d84.0440205">Airport Enclave, Jharsuguda</a></h4>
+                                    <p>view location</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ps-section__column">
+                            <div class="ps-block--destination">
+                                <div class="ps-block__image"><img style="border-radius: 10px;" src="{% static 'projects/img/hills_resort_map.png' %} " alt="" /><a class="ps-block__overlay" href="#"></a></div>
+                                <div class="ps-block__content">
+                                    <h4><a target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/place/27%C2%B022'39.6%22N+76%C2%B001'38.1%22E/@27.3776201,76.0263164,188m/data=!3m1!1e3!4m9!1m2!10m1!1e2!3m5!1s0x396d0dbd2c2e8125:0x0!7e2!8m2!3d27.3776648!4d76.0272564">Golf Resort, Shahpura</a></h4>
+                                    <p>view location</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+{% endblock %}

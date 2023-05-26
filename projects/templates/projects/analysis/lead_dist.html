@@ -1,0 +1,76 @@
+<div class="card" id="Lead_distribution">
+    <h3>Total Leads : {{ leads|length }}</h3>
+    <div style="max-width: 400px;margin: 0 auto;">
+        <canvas id="chartJSContainer" width="100%"></canvas>
+    </div>
+
+
+
+    <table id="dist_table" class="display nowrap" style="width:100%">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Name</th>
+                <th>Mobile</th>
+                <th>Details</th>
+                <th>Stage</th>
+                <th>S_Date</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for lead in leads %}
+            <tr>
+                <td>{{ lead.date|date:'Y-m-d' }}</td>
+                <td> {{ lead.name }} </td>
+                <td>{{ lead.mobile }}</td>
+                <td>{{ lead.Source.source }} : {{ lead.occupation }}</td>
+                <td>{{ lead.leadstage_set.last.stage }}</td>
+                <td>{{ lead.leadstage_set.last.date }}</td>
+                <td>{{ lead.leadstage_set.last.remarks }}</td>
+            </tr>
+
+            {% endfor %}
+
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+<script>
+    var options = {
+        type: 'doughnut',
+        data: {
+            labels: [{% for s in stages %} '{{ s }}' , {% endfor %} ] ,
+    datasets: [{
+        label: '# of leads',
+        data: {{ stage_values }},
+        backgroundColor: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange", "Violet", "Green", "Orange", "Pink", "Grey", "Red", "Blue", "Yellow"]
+
+      }]
+    },
+    options: {
+        onClick: (evt, el, chart) => {
+
+            let point = chart.getElementsAtEventForMode(evt, 'point', {
+                intersect: true
+            }, true);
+
+            var c_l = chart.data.labels[point[0].index];
+            console.log(c_l);
+            dist_table.columns(4)
+                .search(c_l)
+                .draw();
+        }
+    }
+  };
+
+    var ctx = document.getElementById('chartJSContainer').getContext('2d');
+    new Chart(ctx, options);
+
+</script>

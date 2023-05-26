@@ -1,0 +1,75 @@
+<div class="card" id="CallLogs">
+    <h3>Employee Call Logs</h3>
+    <div style="max-width: 400px;margin: 0 auto;">
+        <canvas id="emp_logs" width="100%"></canvas>
+    </div>
+
+    <table id="call_logs_table" class="display nowrap" style="width:100%">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Agent</th>
+                <th>Name</th>
+                <th>Mobile</th>
+                <th>Details</th>
+                <th>Stage</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for call in call_logs %}
+            <tr>
+                <td>{{ call.date|date:'Y-m-d' }}</td>
+                <td> {{ call.agent }} </td>
+                <td> {{ call.lead.name }} </td>
+                <td>{{ call.lead.mobile }}</td>
+                <td>{{ call.lead.Source.source }} : {{ call.lead.occupation }}</td>
+                <td>{{ call.lead.leadstage_set.last.stage }}</td>
+                <td>{{ call.lead.leadstage_set.last.remarks }}</td>
+            </tr>
+
+            {% endfor %}
+
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+<script>
+
+    var options = {
+        type: 'doughnut',
+        data: {
+            labels: [{% for s in log_dist_names %} '{{ s }}' , {% endfor %} ],
+    datasets: [{
+        label: '# of leads',
+        data: {{ log_dist_nums }},
+        backgroundColor: [{% for s in log_colors %} '{{ s }}', {% endfor %} ]
+
+      }]
+    },
+    options: {
+        onClick: (evt, el, chart) => {
+
+            let point = chart.getElementsAtEventForMode(evt, 'point', {
+                intersect: true
+            }, true);
+
+            var c_l = chart.data.labels[point[0].index];
+            console.log(c_l);
+            logs_table.columns(1)
+                .search(c_l)
+                .draw();
+        }
+    }
+  };
+
+    var ctx2 = document.getElementById('emp_logs').getContext('2d');
+    new Chart(ctx2, options);
+
+</script>

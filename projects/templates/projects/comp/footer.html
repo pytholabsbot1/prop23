@@ -1,0 +1,105 @@
+  {% load static%}
+  
+  
+    <main class="ps-main" id="contact">
+        <footer class="ps-footer ps-footer--default bg--cover" data-background="{% static 'projects/img/bg/footer-bg.jpg' %} ">
+            <div class="container">
+                <div class="ps-footer__top">
+                    <div class="ps-footer__widgets">
+                        <div class="ps-footer__column">
+                            <div class="ps-widget ps-widget--footer ps-widget-footer-contact">
+                                <div class="ps-widget__content">
+                                <img src="{% static 'projects/img/abl_full.png' %}" alt="" srcset="" style="max-width: 80%;margin-bottom: 10px;">
+                                    <p> J-99/100, Ashok Chowk, Adarsh Nagar, Jaipur 302004, India</p>
+                                    <p> <a href="tel:{{ Base.mobile }}">{{ Base.mobile }}</a></p>
+                                    <p><a><span class="__cf_email__" >ascentbuildhome@gmail.com</span></a></p>
+                                    <div class="ps-social-links light">
+                                    <a href="https://www.facebook.com/airportenclavejsg/"><i class="lnir lnir-facebook-filled"></i></a>
+                                    <a href="https://www.instagram.com/ascentbuildhome/"><i class="lnir lnir-instagram"></i></a>
+                                    <a href="https://www.youtube.com/channel/UCZ5eJQSPztLZ4Ukwu6osIGQ"><i class="lnir lnir-youtube"></i></a>
+                                   
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ps-footer__column">
+                            <div class="ps-widget ps-widget--footer">
+                                <div class="ps-widget__content">
+                                    <ul class="ps-widget__links">
+                                       {% for project in projects %}
+                                            <li><a href="/project/{{ project.name }}">{{ project.name }}</a></li>
+                                       {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ps-footer__column">
+                            <div class="ps-widget ps-widget--footer">
+                                <div class="ps-widget__content">
+                                    <ul class="ps-widget__links">
+                                        <li><a href="/">Home</a></li>
+                                        <li><a href="/#about">About</a></li>
+                                        <li><a href="/#contact">Contact</a></li>
+                                        <li><a href="https://www.youtube.com/channel/UCZ5eJQSPztLZ4Ukwu6osIGQ">Videos</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ps-footer__subscribe" style="background-color: white;padding: 25px;border-radius: 10px;">
+                        <div class="ps-widget ps-widget--footer ps-widget--footer-subscribe">
+                            <div class="ps-widget__content">
+                                <form class="ps-form--agent-contact"  method="post">
+                                                                            {% csrf_token %}
+                                       
+                                    <div class="ps-form__content">
+                                        <div class="form-group">
+                                            <div class="ps-form underline">
+                                                 {{ form.name }}
+                                                <label>Your name <span class="required">*</span></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="ps-form underline">
+                                                {{ form.phone }}
+                                                <label>Your Phone Number <span class="required">*</span></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="ps-form underline">
+                                                {{ form.email }}
+                                                <label>Your Email <span class="required">*</span></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="ps-form text-area underline">
+                                                {{ form.msg }}
+                                                <label>Your message</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="ps-checkbox">
+                                                <input class="form-control" type="checkbox" id="agree-term" name="agree" checked="checked" />
+                                                <label for="agree-term">By submitting this form I agree to <a href="#">Terms of Use</a></label>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+                                    <div class="ps-form__bottom">
+                                        <button class="form_init ps-btn" >Submit</button><a class="ps-btn ps-btn--gray" href="https://wa.me/{{ Base.whatsapp }}/?text=I am Interested">Whatsapp</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ps-footer__bottom">
+                    <div class="ps-footer__copyright">
+                        <p>&copy; 2021 <strong>Ascent Buildhome Developers Ltd</strong>. All right reserved</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>

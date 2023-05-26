@@ -1,0 +1,89 @@
+<div class="card" id="Lead_schedules">
+    <h3>Scheduled Leads</h3>
+    <div style="max-width: 400px;margin: 0 auto;">
+        <canvas id="schedules_chart" width="100%"></canvas>
+    </div>
+
+    <table id="Lead_schedules_table" class="display nowrap" style="width:100%">
+        <thead>
+            <tr>
+                <th>Call_Date</th>
+                <th>Name</th>
+                <th>Mobile</th>
+                <th>Details</th>
+                <th>Stage</th>
+                <th>Remarks</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for lead in u_leads %}
+            <tr>
+                <td>{{ lead.leadstage_set.last.call_by|date:'Y-m-d' }}</td>
+                <td> {{ lead.name }} </td>
+                <td>{{ lead.mobile }}</td>
+                <td>{{ lead.Source.source }} : {{ lead.occupation }}</td>
+                <td>{{ lead.leadstage_set.last.stage }}</td>
+                <td>{{ lead.leadstage_set.last.remarks }}</td>
+                <td>Upcoming</td>
+            </tr>
+
+            {% endfor %}
+
+
+            {% for lead in e_leads %}
+            <tr>
+                <td>{{ lead.leadstage_set.last.call_by|date:'Y-m-d' }}</td>
+                <td> {{ lead.name }} </td>
+                <td>{{ lead.mobile }}</td>
+                <td>{{ lead.Source.source }} : {{ lead.occupation }}</td>
+                <td>{{ lead.leadstage_set.last.stage }}</td>
+                <td>{{ lead.leadstage_set.last.remarks }}</td>
+                <td>Expired</td>
+            </tr>
+
+            {% endfor %}
+
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+<script>
+    // ----------------------------
+
+    var options = {
+        type: 'doughnut',
+        data: {
+            labels: ['Expired', 'Upcoming'],
+            datasets: [{
+                label: '# of leads',
+                data: [{{ e_leads| length }}, {{ u_leads| length }} ] ,
+    backgroundColor: ["Red", "Yellow"]
+
+      }]
+    },
+    options: {
+        onClick: (evt, el, chart) => {
+
+            let point = chart.getElementsAtEventForMode(evt, 'point', {
+                intersect: true
+            }, true);
+
+            var c_l = chart.data.labels[point[0].index];
+            console.log(c_l);
+            schedule_table.columns(6)
+                .search(c_l)
+                .draw();
+        }
+    }
+  };
+
+    var ctx1 = document.getElementById('schedules_chart').getContext('2d');
+    new Chart(ctx1, options);
+</script>

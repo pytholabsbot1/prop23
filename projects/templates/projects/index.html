@@ -1,0 +1,194 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WMJ69W7');</script>
+<!-- End Google Tag Manager -->
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="Home - Ascent Buildhome Developers Limited">
+    <meta name="description" content="Welcome to Ascent Build Home Developers LTD (ABL), a Real Estate Company offering Dream Home with blend of luxury, incomparable designing and picturesque surroundings.">
+    <meta name="image" content="{% static 'projects/img/abl.png' %}">
+    <meta name="keywords" content="Ascent Buildhome Developers, property in jharsuguda, property in bhiwadi, property in jaipur, peroperty in shahpura, buy villa, buy flats, ascent buildhome developers ltd, ascent, ascentbuildhome, ascent buildhome, Ascent">
+    <meta name="author" content="Ascent Buildhome Developers">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'projects/img/fav_32.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'projects/img/fav_32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'projects/img/fav_32.png' %}">
+    <title>Home - Ascent Buildhome Developers Limited</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'projects/plugins/bootstrap4/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'projects/plugins/owl-carousel/assets/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'projects/fonts/Linearicons/Linearicons/Font/demo-files/demo.css' %}">
+    <link rel="stylesheet" href="{% static 'projects/fonts/LineIcons/Pro-Light/font-css/LinIconsPro-Light.css' %}">
+    <link rel="stylesheet" href="{% static 'projects/fonts/LineIcons/Pro-Regular/font-css/LineIcons.css' %}">
+    <link rel="stylesheet" href="{% static 'projects/plugins/leaflet/dist/leaflet.css' %}">
+    <link rel="stylesheet" href="{% static 'projects/plugins/nouslider/nouislider.min.css' %}">
+    <link rel="stylesheet" href="{% static 'projects/plugins/apexcharts-bundle/dist/apexcharts.css' %}">
+    <link rel="stylesheet" href="{% static 'projects/css/style.css' %}">
+
+    <style>
+
+        @media screen and (min-width: 1024px) {
+          .ps-site-stats .ps-section__intro {
+                grid-template-columns: 1fr ;
+            }
+
+            .ps-section__content{
+                grid-template-columns: 1fr 2fr !important;
+            }
+
+            .p_{
+                max-width: max-content !important;
+            }
+ 
+            .ps-site-stats .ps-section__wrapper {
+                grid-template-columns: 1fr 2fr 2fr;
+            }
+
+            .ps-top-destinations .ps-section__columns {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+
+    </style>
+
+
+</head>
+
+<body>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WMJ69W7"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+    <script src="{% static 'projects/plugins/jquery.min.js' %}"></script>
+    <script src="{% static 'projects/plugins/bootstrap4/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'projects/plugins/owl-carousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'projects/plugins/nouslider/nouislider.min.js' %}"></script>
+    <script src="{% static 'projects/plugins/leaflet/dist/leaflet.js' %}"></script>
+    <script src="{% static 'projects/plugins/apexcharts-bundle/dist/apexcharts.min.js' %}"></script>
+    <script src="{% static 'projects/js/main.js' %}"></script>
+    <script src="{% static 'projects/js/chart.js' %}"></script>
+    <script src="{% static 'projects/js/map.js' %}"></script>
+
+    <header class="header header--desktop header--one header--fixed header--transparent" data-sticky="true">
+        <div class="container">
+            <div class="header__wrapper">
+                <div class="header__left">
+                    <div class="header__logo"><a class="ps-logo light" href="/"><img src="{% static 'projects/img/abl.png' %}" alt="" /></a><a class="ps-logo" href="/"><img src="{% static 'projects/img/abl.png' %}" alt="" /></a>
+                    </div>
+                    <ul class="menu menu--desktop">
+                        <li><a href="#about">About</a>
+                        </li>
+                        
+                        <li class="menu-item-has-children"><a >Properties</a><span class="sub-toggle"></span>
+                            <ul class="sub-menu">
+                                
+                                {% for project in projects %}
+                                    <li><a href="/project/{{ project.name }}"> {{ project.name }} </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    
+                        <li><a href="#locations">Locations</a>
+                        </li>
+
+                        <li><a href="#contact">Contact</a>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="header__right">
+                    <div class="header__actions">
+                        <div class="header__submit-listing">
+                            <a href="#contact" class="form_init ps-btn ps-btn--with-opacity">Enquire Now<i class="lnil lnil-arrow-top-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <header class="header header--mobile" data-sticky="true">
+        <div class="header__left">
+            <div class="header__logo"><a class="ps-logo" href="/"><img src="{% static 'projects/img/abl.png'  %}" alt="" /></a>
+            </div>
+        </div>
+        <div class="header__right"><a class="header__menu-toggle ps-toggle-drawer" href="#" data-target="drawer-menu"><i class="lnil lnil-menu"></i></a></div>
+    </header>
+
+    {% block content %} {% endblock content %}
+
+    {% include 'projects/comp/footer.html' %}
+
+    <div class="ps-drawer" id="drawer-menu">
+        <div class="ps-drawer__top">
+            <div class="ps-drawer__heading">Menu</div><a class="ps-drawer__close" href="#"><i class="icon-cross"></i></a>
+        </div>
+        <div class="ps-drawer__bottom">
+            <ul class="menu--mobile">
+
+            <li><a href="#about">About</a>
+            </li>
+            
+            <li class="menu-item-has-children"><a >Properties</a><span class="sub-toggle"></span>
+                <ul class="sub-menu">
+                    
+                    {% for project in projects %}
+                        <li><a href="/project/{{ project.name }}"> {{ project.name }} </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        
+            <li><a href="#locations">Locations</a>
+            </li>
+
+            <li><a href="#contact">Contact</a>
+            </li>
+
+            </ul>
+        </div>
+    </div>
+    
+    <div id="back2top"><i class="lnil lnil-arrow-up"></i></div>
+
+    <div class="ps-site-overlay"></div>
+    <!-- Plugins-->
+
+    <h2 style="display: none;">Ascent Buildhome Developers, property in jharsuguda, property in bhiwadi, property in jaipur, peroperty in shahpura, buy villa, buy flats, ascent buildhome developers ltd, ascent, ascentbuildhome, ascent buildhome, Ascent</h2>
+    <h1 style="display: none;">Ascent Buildhome Developers, property in jharsuguda, property in bhiwadi, property in jaipur, peroperty in shahpura, buy villa, buy flats, ascent buildhome developers ltd, ascent, ascentbuildhome, ascent buildhome, Ascent</h1>
+
+
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/62d257317b967b117999ca92/1g82q97dm';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+        })();
+        </script>
+        <!--End of Tawk.to Script-->
+
+
+</body>
+
+
+</html>
