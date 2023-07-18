@@ -2,14 +2,16 @@ from __future__ import print_function
 from django.shortcuts import render
 
 # Create your views here.
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.http.response import HttpResponseRedirectBase
 from .models import *
 from .forms import BrochureForm, EnquiryForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 import pandas, re, json, requests as req
 from datetime import date, timedelta, datetime
+from django.db import models
 from django.db.models import Count
 import sib_api_v3_sdk
 from sib_api_v3_sdk.rest import ApiException
@@ -573,3 +575,86 @@ def json_api(request, query):
 
     else:
         return HttpResponse("Baap se panga mat lo Bete")
+
+
+@csrf_exempt
+def fresh_leads(request):
+    if request.method == "POST":
+        pass_ = request.POST.get(
+            "pass"
+        )  # Assuming the code is sent as a parameter named 'code'
+        if pass_ == "JMGHJSDGJHkjshakjha0989y87mnasVNVasdjkh":
+
+            if request.POST.get("type") == "fresh":
+                # Get the cutoff date for CallLog
+                cutoff_date = datetime.now() - timedelta(days=2)
+
+                # Query the leads based on the criteria
+                leads = (
+                    Lead.objects.annotate(num_leadstages=Count("leadstage"))
+                    .filter(
+                        models.Q(calllog__isnull=True)
+                        | models.Q(calllog__date__lt=cutoff_date),
+                        num_leadstages__lte=1,
+                    )
+                    .order_by("-date")
+                )[:50]
+
+                leads_data = []
+                for lead in leads:
+                    lead_data = {
+                        "date": lead.date,
+                        "source": lead.Source.source if lead.Source else None,
+                        "name": lead.name,
+                        "mobile": lead.mobile,
+                        "location": lead.Location.location
+                        if lead.Location
+                        else lead.location_str,
+                        "occupation": lead.occupation,
+                    }
+                    leads_data.append(lead_data)
+
+                return JsonResponse({"data": leads_data})
+
+            else:
+                start_date = datetime.now().date()
+                end_date = start_date + timedelta(days=7)
+
+                rows = []
+                for lead in Lead.objects.all():
+                    s = lead.leadstage_set.last()
+                    stage_ = s.stage.stage if (s) else "None"
+                    if stage_ in ["Site visit scheduled", "Need follow-up"]:
+                        if s.call_by and start_date <= s.call_by.date() <= end_date:
+                            d_ = {
+                                "date": lead.date,
+                                "source": lead.Source.source if lead.Source else None,
+                                "name": lead.name,
+                                "mobile": lead.mobile,
+                                "location": lead.Location.location
+                                if lead.Location
+                                else lead.location_str,
+                                "occupation": lead.occupation,
+                                "CallBy": s.call_by,
+                                "remarks": s.remarks,
+                                "LastCalled": lead.calllog_set.last().date.date() if(lead.calllog_set.last()) else "-",
+                            }
+                            # print(stage_, lead)
+                            rows.append(d_)
+                return JsonResponse({"data": rows})
+
+        return "Fuckoff"
+
+
+@csrf_exempt
+def mark_call(request):
+    if request.method == "POST":
+        pass_ = request.POST.get(
+            "pass"
+        )  # Assuming the code is sent as a parameter named 'code'
+        if pass_ == "JMGHJSDGJHkjshakjha0989y87mnasVNVasdjkh":
+            user = User.objects.get(username__contains="vaq")
+            c = CallLog(
+                agent=user, lead=Lead.objects.get(mobile=request.POST.get("mobile"))
+            )
+            c.save()

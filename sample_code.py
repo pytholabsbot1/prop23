@@ -168,3 +168,19 @@ for lead in Lead.objects.all():
     if(stage_ in ["Revisiting","Booking Consideration", "Submitted Again", "Not Picking Up", "Call Disconnected", "No Commitment", "Wants Plot", "Budget Issue", "Purchase Later", "COLD", "Need follow-up", "Not reachable", "Site visit scheduled", "Site Visit done", "Interested", "WA Intro Sent"]):
         d = f"{lead.date}\t{s_}\t{lead.name}\t{lead.mobile}\t{loc}\t{lead.occupation}\t{stage_}"
         rows.append(d)
+
+
+
+
+# Get the date range for the last 7 days
+start_date = datetime.now().date()
+end_date = start_date - timedelta(days=7)
+
+rows = []
+for lead in Lead.objects.all():
+    s = lead.leadstage_set.last()
+    stage_ = s.stage.stage if(s) else "None"
+    if(stage_ in ["Site visit scheduled"]):
+        print(stage_ , lead)
+        rows.append(lead)
+        # if(s.call_by and start_date <= s.call_by.date() <= end_date):
