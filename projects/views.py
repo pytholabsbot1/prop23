@@ -602,6 +602,8 @@ def fresh_leads(request):
 
                 leads_data = []
                 for lead in leads:
+                    s = lead.leadstage_set.last()
+                    stage_ = s.stage.stage if (s) else "None"
                     lead_data = {
                         "date": lead.date,
                         "source": lead.Source.source if lead.Source else None,

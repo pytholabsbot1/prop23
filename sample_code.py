@@ -162,12 +162,15 @@ i_ = ""
 for lead in Lead.objects.all():
     s = lead.leadstage_set.last()
     stage_ = s.stage.stage if(s) else "None"
-    loc = lead.Location.location if(lead.Location) else lead.location_str
-    s_ = lead.Source.source if(lead.Source) else "None"
-    rem_ = s.remarks if(s) else "None"
-    if(stage_ in ["Revisiting","Booking Consideration", "Submitted Again", "Not Picking Up", "Call Disconnected", "No Commitment", "Wants Plot", "Budget Issue", "Purchase Later", "COLD", "Need follow-up", "Not reachable", "Site visit scheduled", "Site Visit done", "Interested", "WA Intro Sent"]):
-        d = f"{lead.date}\t{s_}\t{lead.name}\t{lead.mobile}\t{loc}\t{lead.occupation}\t{stage_}"
-        rows.append(d)
+    # loc = lead.Location.location if(lead.Location) else lead.location_str
+    # s_ = lead.Source.source if(lead.Source) else "None"
+    # rem_ = s.remarks if(s) else "None"
+
+    # check if theres alpha in string
+
+    if(stage_ in ["None","Revisiting","Booking Consideration", "Submitted Again", "Not Picking Up", "Call Disconnected", "No Commitment", "Wants Plot", "Budget Issue", "Purchase Later", "COLD", "Need follow-up", "Not reachable", "Site visit scheduled", "Site Visit done", "Interested", "WA Intro Sent"]):
+        # d = f"{lead.date}\t{s_}\t{lead.name}\t{lead.mobile}\t{loc}\t{lead.occupation}\t{stage_}"
+        rows.append(lead.wa_num if(lead.wa_num and not any(char.isalpha() for char in lead.wa_num )) else lead.mobile)
 
 
 
@@ -184,3 +187,9 @@ for lead in Lead.objects.all():
         print(stage_ , lead)
         rows.append(lead)
         # if(s.call_by and start_date <= s.call_by.date() <= end_date):
+
+
+
+
+a = "\n".join(rows)
+open("data.csv","w").write(a)
