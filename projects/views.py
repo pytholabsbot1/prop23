@@ -577,6 +577,10 @@ def json_api(request, query):
         return HttpResponse("Baap se panga mat lo Bete")
 
 
+def privacy(request):
+    p_ = open('/home/vaqasahmed/prop23/static/privacy.txt','r').read().replace('\n',"<br/s>")
+    return(HttpResponse(p_))
+
 @csrf_exempt
 def fresh_leads(request):
     if request.method == "POST":

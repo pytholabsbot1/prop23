@@ -10,6 +10,7 @@ urlpatterns = [
     path("sndwa/<str:index>", views.sendwa, name="mark"),
     # path("loadcsv", view=views.loadcsv),
     path("mcll", view=views.mark_call),
+    path("privacy", view=views.privacy),
     path("lepost", view=views.lepost),
     path("dash", view=views.dash),
     path("fetch_leads", views.fresh_leads, name="ff"),

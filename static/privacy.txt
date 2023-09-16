@@ -1,0 +1,56 @@
+**User Data Policy for Airport Enlcave**
+
+
+**Introduction**
+
+Welcome to Airport Enlcave! This User Data Policy outlines how we collect, use, store, and delete user data in our Android application. We are committed to safeguarding your privacy and ensuring the security of your personal information. By using our app, you agree to the practices described in this policy.
+
+**1. Data Collection**
+
+We collect certain information to provide you with the best experience and improve our services. The information we collect may include:
+
+- **Device Information:** We may collect device-specific information such as your device model, operating system version, unique device identifiers, and mobile network information.
+
+- **Log Information:** Our app automatically collects and stores certain information in server logs. This may include details about how you use our app, IP address, app crashes, and system activity.
+
+- **Usage Information:** We may collect information about how you interact with our app, such as the features you use, buttons you click, and pages you visit.
+
+- **Location Information:** With your consent, we may collect and process information about your precise location using technologies like GPS and Wi-Fi.
+
+**2. Data Use**
+
+We use the collected data to provide and improve our app's functionality, personalize user experience, and communicate with you. The ways we use your data include:
+
+- **App Functionality:** We use your data to operate, maintain, and enhance the features of our app.
+
+- **Personalization:** We may use your data to customize your experience, such as recommending content or features that match your preferences.
+
+- **Communication:** We may use your contact information to send you updates, announcements, and promotional materials related to our app. You can opt-out of these communications at any time.
+
+- **Analytics:** We analyze user data to gain insights into app usage patterns, identify areas for improvement, and optimize user experience.
+
+**3. Data Storage and Security**
+
+We are committed to protecting your data and maintaining its confidentiality. We implement appropriate security measures to prevent unauthorized access, disclosure, alteration, or destruction of your personal information. However, no method of transmission over the internet or electronic storage is completely secure, so we cannot guarantee its absolute security.
+
+**4. Data Deletion**
+
+We retain your data for a maximum of 90 days from the date of collection, after which it is permanently deleted from our servers. This ensures that we only store your data for as long as necessary to fulfill the purposes outlined in this policy.
+
+**5. Third-Party Services**
+
+Our app may contain links to third-party websites, services, or advertisements that are not owned or controlled by us. We are not responsible for the privacy practices or content of these third parties. We encourage you to review the privacy policies of these third parties before interacting with their services.
+
+**6. Children's Privacy**
+
+Our app is not intended for use by individuals under the age of 13. We do not knowingly collect personal information from children. If we learn that we have collected personal information from a child under 13, we will take steps to delete such information as soon as possible.
+
+**7. Changes to this Policy**
+
+We may update this User Data Policy from time to time to reflect changes in our practices or for other operational, legal, or regulatory reasons. We will notify you of any changes by posting the updated policy within the app or via other communication channels.
+
+**8. Contact Us**
+
+If you have any questions, concerns, or requests regarding your data or this policy, please contact us at [email address].
+
+By using Airport Enclave, you acknowledge that you have read and understood this User Data Policy and agree to the collection, use, and storage of your data as described herein.
