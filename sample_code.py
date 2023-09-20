@@ -193,10 +193,29 @@ for lead in Lead.objects.all():
         # if(s.call_by and start_date <= s.call_by.date() <= end_date):
 
 
-`rows = []
-for lead in Lead.objects.all():
-    rows.append(lead.wa_num if(lead.wa_num and not any(char.isalpha() for char in lead.wa_num )) else lead.mobile)
-`
+for lead in Lead.objects.all().order_by('-date')[:39]:
+    m_ = lead.wa_num if lead.wa_num and not any(char.isalpha() for char in lead.wa_num) else lead.mobile
+    lead.delete()
+    print(m_)
+
+
+
+
+rows = []
+l_stages =["None", "Revisiting", "Booking Consideration", "Submitted Again", "Budget Issue", "Need follow-up", "Site visit scheduled", "Site Visit done", "Interested", "WA Intro Sent"]
+i_ = ""
+for lead in Lead.objects.all().reverse():
+    s = lead.leadstage_set.last()
+    stage_ = s.stage.stage if s else "None"
+    loc = lead.Location.location if lead.Location else lead.location_str
+    s_ = lead.Source.source if lead.Source else "None"
+    rem_ = s.remarks if(s and s.remarks and "Again" not in stage_) else "None"
+    # print(rem_)
+    if stage_ in l_stages:
+        print(stage_)
+        m_ = lead.wa_num if lead.wa_num and not any(char.isalpha() for char in lead.wa_num) else lead.mobile
+        # d = f"{lead.date}\t{s_}\t{lead.name}\t{m_}\t{loc}\t{lead.occupation}\t{stage_} : {rem_}\n"
+        rows.append(m_)
 
 a = "\n".join(rows)
 open("data.csv","w").write(a)
