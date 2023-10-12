@@ -83,14 +83,14 @@ class FileAdmin(admin.ModelAdmin):
 
 class LeadAdmin(admin.ModelAdmin):
 
-    search_fields = ("name", "mobile", "occupation", "alternate_num")
+    search_fields = ("name", "mobile", "occupation", "wa_num")
     list_display = (
         "name",
         "date",
         "Call",
         "product_interested",
         "m_details",
-        "alternate_num",
+        "wa_num",
         "SendWhatsapp",
         "Whatsapp",
         "call_log",

@@ -336,6 +336,14 @@ def lepost(request):
 
             lead_exist = Lead.objects.filter(mobile=m)
 
+            # ----- Send notification to WA
+            a_ = req.post('http://0.0.0.0:8800/queueshit', 
+                                json= {
+                'msg': f'{request.POST["name"]}\n{request.POST["mobile"]} \n {request.POST["wa_num"]} \n {request.POST["occupation"]}'
+            }, headers={
+                'API-Key': 'aksjdajkdKJGJHVJHUYFUYF809080987687'
+            })
+
             if not lead_exist:
 
                 l_ = Lead()
