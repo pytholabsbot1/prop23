@@ -118,9 +118,12 @@
                 <div class="header__right">
                     <div class="header__actions">
                         <div class="header__submit-listing">
-                            <div class="form_init ps-btn ps-btn--with-opacity brochure_form">Download Brochure
-                                <i class="lnil lnil-arrow-top-right"></i>
-                            </div>
+
+                            <a href="https://play.google.com/store/apps/details?id=com.ascentbuildhome.ae_project" target="_blank">
+                            <div class="form_init ps-btn ps-btn--with-opacity">
+                                Download APP
+                            <i class="lnil lnil-Mobile" style="font-size: 2em;  "></i></div></a>
+
                         </div>
                     </div>
                 </div>
@@ -136,9 +139,11 @@
         <div class="header__right">
             <div class="header__actions">
                 <div class="header__submit-listing">
-                    <div class="form_init ps-btn ps-btn--with-opacity brochure_form">Download Brochure
-                        <i class="lnil lnil-arrow-top-right"></i>
-                    </div>
+                    <a href="https://play.google.com/store/apps/details?id=com.ascentbuildhome.ae_project" target="_blank">
+                    <div class="form_init ps-btn ps-btn--with-opacity">
+                        Download APP
+                    <i class="lnil lnil-Mobile" style="font-size: 2em;  "></i></div></a>
+
                 </div>
             </div>
         </div>
@@ -267,14 +272,13 @@
 
 
 
-                                    {% if not key_points %}
-
+                                    {% if project.floorplan_set.all %}
                                     <div class="ps-project__block" style="margin-bottom: 60px;
                                                                 background: aliceblue;
                                                         border-radius : 15px;
                                                         margin-bottom: 60px;
                                                         padding-bottom: 50px;
-                                                                padding-top: 50px;
+                                                                padding-top: 20px;
                                                                 padding-left: 10px;
                                                                 padding-right: 10px;
                                                                 margin-left: -15px;
@@ -286,57 +290,16 @@
                                                     padding: 10px;
                                                     background-color: white;
                                                     width: 200px;
+                                                    margin-bottom: 10px;
                                                     border-radius: 20px;
                                                     text-align: center;"><h3 style="margin-bottom: 0px;"> Floor Plans </h3></div>
                                         
                                         </div>
+
+                                        
                                         <div class="ps-block--floor-plan" style="padding:5px;">
 
-                                            {% if 'Airport' in request.path or  'test' in request.path %}
-
-                                                {% for plan_type in project.floorplantype_set.all %}
-                                                    
-                                                    <div>{{ plan_type.yt_link| safe }}</div>
-
-                                                    <div style="margin:20px;">
-                                                    <h4> {{ plan_type.title }} </h4></div>
-
-
-                                                {% for plan in plan_type.floorplan_set.all %}
-                                                    <div class="ps-accordion ps-accordion--floor-plan"
-                                                        style="background:white;">
-                                                        <div class="ps-accordion__header">
-                                                            <div class="ps-accordion__header-wrapper">
-                                                                <p><strong>{{ plan.title }}</strong></p>
-                                                                <p class="ps-accordion__params"
-                                                                    style="grid-template-columns: 1fr !important;">
-
-                                                                    {% if plan.sold_out %}
-                                                                    <span>
-                                                                        <strong style="color:red;"> SOLD OUT </strong></span>
-                                                                </p>
-
-                                                                {% else %}
-                                                                <span>
-                                                                    <strong>Size</strong>: {{ plan.size }}</span> </p>
-
-                                                                {% endif %}
-                                                            </div>
-
-
-                                                            <p class="form_init brochure_form" style="padding: 10px;">View</p>
-                                                        </div>
-                                                    </div>
-                                                {% endfor %}
-
-
-                                                
-
-
-                                                {% endfor%}
-
-                                            {% else %}
-
+                                  
                                             {% for plan in project.floorplan_set.all %}
                                             <div class="ps-accordion ps-accordion--floor-plan"
                                                 style="background:white;">
@@ -365,15 +328,16 @@
 
                                             {% endfor %}
 
-                                            {% endif %}
+                                        
                                         </div>
-                                    </div>
 
+                                       
+                                    </div>
+                                    
+                                    <hr style="margin: 20px;" />
                                     {% endif %}
 
-                                    <hr style="margin: 20px;" />
-
-
+                                    
                                 </div>
                             </div>
 
@@ -424,7 +388,12 @@
                             <div class="ps-project__content">
 
                                 <div class="ps-project__block ps-project__desc">
-                                    <div class="ps-project__heading">Description</div>
+                                    <hr>
+                                    <div class="ps-project__heading" style="
+                                        padding-top: 10px;
+                                        margin-bottom: 20px;
+                                        font-size: 35px;
+                                    ">Our Vision</div>
                                     {{ project.description | safe }}
                                 </div>
 
@@ -628,15 +597,9 @@
 
     <div class="ps-site-overlay"></div>
 
-    {% if project.tour %}
-    <a target="_blank" href="/tour" style="position: fixed; bottom: 20px; right: 20px; z-index:100;">
-        <img src="/media/{{ project.tour }}" style="width: 200px;" />
-    </a>
-
-    {% else %}
-
-    <!--Start of Tawk.to Script-->
-    <script type="text/javascript">
+    
+    <!-- Start of Tawk.to Script-->
+    <!-- <script type="text/javascript">
         var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
         (function () {
             var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
@@ -646,10 +609,10 @@
             s1.setAttribute('crossorigin', '*');
             s0.parentNode.insertBefore(s1, s0);
         })();
-    </script>
-    <!--End of Tawk.to Script-->
+    </script> -->
+    <!--End of Tawk.to Script -->
 
-    {% endif %}
+    
 
 
 
@@ -731,6 +694,96 @@
 
     </script>
 
+
+<div><div id="118493920542770732" align="left" style="width: 100%; overflow-y: hidden;" class="wcustomhtml">	
+	
+
+    <style>
+
+                /* Make it looks good on CodePen */
+
+            /* Prevent scrollbars to appear when waves go out of bound */
+            .sonar-wrapper {
+              position: relative;
+              z-index: 0;
+              overflow: hidden;
+              padding: 8rem 0;
+            }
+
+            /* The circle */
+            .sonar-emitter {
+                position: fixed;
+                  bottom: 10px;
+                  right: 20px;
+              width: 50px;
+              height: 50px;
+              text-align: center;
+              padding-right: 5px;
+              border-radius: 9999px;
+              background-color: #ffffff;
+            }
+
+
+            #contact_img{
+                margin-top: 7px;
+                margin-left: 8px;
+                width: 28px;
+            }
+
+            /* the 'wave', same shape and size as its parent */
+            .sonar-wave {
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              border-radius: 9999px;
+              background-color: #80d277;
+              opacity: 0;
+              z-index: -1;
+              pointer-events: none;
+            }
+
+            /*
+              Animate!
+              NOTE: add browser prefixes where needed.
+            */
+            .sonar-wave {
+              animation: sonarWave 2s linear infinite;
+            }
+
+            @keyframes sonarWave {
+              from {
+                opacity: 0.4;
+              }
+              to {
+                transform: scale(3);
+                opacity: 0;
+              }
+            }
+
+
+
+    </style>
+
+
+<a class="sonar-wrapper" >
+    </a><a class="sonar-emitter" href="https://wa.me/{{ Base.whatsapp }}/?text=Hi! , I am Interested" target="_blank">
+                <img id="contact_img" src="{% static 'projects/img/whatsapp.png' %}">
+                
+            
+        <div class="sonar-wave"></div>
+    </a>
+
+
+
+
+
+</div>
+
+
+
+</div>
 
 
 </body>
