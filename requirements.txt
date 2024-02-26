@@ -4,6 +4,7 @@ blinker==1.6.2
 certifi==2023.7.22
 charset-normalizer==3.2.0
 click==8.1.7
+sqlite3
 Django==4.2.4
 django-appconf==1.0.5
 django-compressor==4.4
